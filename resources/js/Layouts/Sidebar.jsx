@@ -15,7 +15,7 @@ export default function Sidebar() {
             setActiveDropdown(1);
         } else if (url.includes("settings") && activeDropdown !== 2) {
             setActiveDropdown(2);
-        } else if (url.includes("customers") && activeDropdown !== 3) {
+        } else if (url.includes("customer") && activeDropdown !== 3) {
             setActiveDropdown(3);
         }
     }, [url]);
@@ -147,7 +147,7 @@ export default function Sidebar() {
                     {activeDropdown === 3 && (
                         <div className="ml-4 mt-2 space-y-2">
                             <Link
-                                href="/customers/add"
+                                href="/customer"
                                 className={`block py-2 px-3 rounded ${
                                     url.startsWith("/customers/add")
                                         ? "bg-gray-700 text-orange-500"

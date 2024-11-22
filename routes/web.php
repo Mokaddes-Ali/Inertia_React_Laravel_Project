@@ -32,12 +32,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
-Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
-Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
-Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
-Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+    Route::get('/customer', [CustomerController::class, 'index'])->name('index');
+    Route::post('/customer/submit', [CustomerController::class, 'create'])->name('create');
+    Route::get('/customer/show', [CustomerController::class, 'show']) -> name('customer.show');
+    Route::get('/customer/edit/{id}', [CustomerController::class, 'edit']);
+    Route::post('/customer/update', [CustomerController::class, 'update']);
+    Route::get('/delete/{id}', [CustomerController::class, 'destroy']);
 
 });
 

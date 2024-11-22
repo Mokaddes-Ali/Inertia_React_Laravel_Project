@@ -24,6 +24,7 @@
         "@fortawesome/free-solid-svg-icons": "^6.7.1",
         "@fortawesome/react-fontawesome": "^0.2.2",
         "@inertiajs/inertia": "^0.11.1",
+        "@inertiajs/inertia-react": "^0.8.1",
         "react-hook-form": "^7.53.2"
     }
 }
