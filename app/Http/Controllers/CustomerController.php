@@ -19,8 +19,14 @@ class CustomerController extends Controller
     // Show all customers
 
     public function show(){
-        $all = Customer::orderBy('id', 'desc')->all();
-        return Inertia::render('Customers/Index', compact('all'));
+        return Inertia::render('Customers/Index', [
+            'all' => Customer::all(), 
+            'can' => [
+                'customer-create' => auth()->user()->can('customer-create'),
+                'customer-edit' => auth()->user()->can('customer-edit'),
+                'customer-delete' => auth()->user()->can('customer-delete'),
+            ],
+        ]);
     }
 
      // Insert customer data
@@ -64,7 +70,7 @@ class CustomerController extends Controller
         }
     }
 
-    
+
 
     // Edit customer form
     public function edit($id){

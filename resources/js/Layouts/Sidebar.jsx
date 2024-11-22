@@ -157,7 +157,7 @@ export default function Sidebar() {
                                 Add Customer
                             </Link>
                             <Link
-                                href="/customers/list"
+                                href="/customer/show"
                                 className={`block py-2 px-3 rounded ${
                                     url.startsWith("/customers/list")
                                         ? "bg-gray-700 text-orange-500"
