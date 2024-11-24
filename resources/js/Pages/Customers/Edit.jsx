@@ -1,76 +1,75 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { Inertia } from "@inertiajs/inertia";
+import React, { useState } from 'react';
+import { Inertia } from '@inertiajs/inertia';
 
-export default function Edit({ customer }) {
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
-        defaultValues: {
-            name: customer.name,
-            email: customer.email,
-            number: customer.number,
-            address: customer.address,
-        },
+const Edit = ({ customer }) => {
+    const [values, setValues] = useState({
+        name: customer.name,
+        email: customer.email,
+        number: customer.number || '',
+        address: customer.address || '',
+        status: customer.status,
     });
 
-    const onSubmit = (data) => {
-        const formData = new FormData();
-        for (const key in data) {
-            formData.append(key, data[key]);
-        }
-        if (data.pic[0]) {
-            formData.append("pic", data.pic[0]);
-        }
-        formData.append("_method", "PUT");
+    const handleChange = (e) => {
+        setValues({ ...values, [e.target.name]: e.target.value });
+    };
 
-        Inertia.post(`/customers/${customer.id}`, formData);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        Inertia.put(`/customers/${customer.id}`, values);
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
-            <div>
-                <label>Name</label>
+        <div className="container mx-auto px-4 py-6">
+            <h1 className="text-2xl font-bold mb-4">Edit Customer</h1>
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <input
-                    {...register("name", { required: "Name is required" })}
-                    className="border p-2 w-full"
+                    type="text"
+                    name="name"
+                    value={values.name}
+                    onChange={handleChange}
+                    placeholder="Name"
+                    className="w-full border px-4 py-2"
                 />
-                {errors.name && <span className="text-red-500">{errors.name.message}</span>}
-            </div>
-            <div>
-                <label>Email</label>
                 <input
-                    {...register("email", { required: "Email is required" })}
-                    className="border p-2 w-full"
+                    type="email"
+                    name="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                    className="w-full border px-4 py-2"
                 />
-                {errors.email && <span className="text-red-500">{errors.email.message}</span>}
-            </div>
-            <div>
-                <label>Number</label>
                 <input
-                    {...register("number")}
-                    className="border p-2 w-full"
+                    type="text"
+                    name="number"
+                    value={values.number}
+                    onChange={handleChange}
+                    placeholder="Number"
+                    className="w-full border px-4 py-2"
                 />
-            </div>
-            <div>
-                <label>Address</label>
                 <input
-                    {...register("address")}
-                    className="border p-2 w-full"
+                    type="text"
+                    name="address"
+                    value={values.address}
+                    onChange={handleChange}
+                    placeholder="Address"
+                    className="w-full border px-4 py-2"
                 />
-            </div>
-            <div>
-                <label>Picture</label>
-                <input {...register("pic")} type="file" className="border p-2 w-full" />
-                {customer.pic && (
-                    <div className="mt-2">
-                        <img
-                            src={`/storage/${customer.pic}`}
-                            alt={customer.name}
-                            className="h-20 w-20 object-cover rounded"
-                        />
-                    </div>
-                )}
-            </div>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
-        </form>
+                <select
+                    name="status"
+                    value={values.status}
+                    onChange={handleChange}
+                    className="w-full border px-4 py-2"
+                >
+                    <option value="0">Inactive</option>
+                    <option value="1">Active</option>
+                </select>
+                <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
+                    Update
+                </button>
+            </form>
+        </div>
     );
-}
+};
+
+export default Edit;

@@ -21,13 +21,9 @@ export default function Create({ errors }) {
     };
 
     return (
-        <AuthenticatedLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Add Post</h2>}>
+        <AuthenticatedLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Add Customer</h2>}>
         <div className="max-w-3xl mx-auto shadow-sm border-0">
-            <div className="card-header bg-blue-600 text-white flex justify-between items-center py-2 px-4">
-                <h5 className="mb-0">Add Customer</h5>
                 <a href="/customer/show" className="btn btn-outline-light btn-sm">View Customers</a>
-            </div>
-
             <div className="card-body px-4 py-3">
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
                     {/* Name Input */}
