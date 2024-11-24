@@ -1,41 +1,40 @@
 <?php
 
-namespace App\Http\Controllers;
 
+
+namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use Flasher\Prime\FlasherInterface;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class CustomerController extends Controller
 {
-    // Add customer form
-    public function index(){
+    // Show the create customer form
+    public function index()
+    {
         return Inertia::render('Customers/Create');
     }
 
     // Show all customers
-
-    public function show(){
+    public function show()
+    {
         $customers = Customer::all();
         return Inertia::render('Customers/Index', [
             'customers' => $customers
         ]);
-
     }
 
-     // Insert customer data
-    public function create(Request $request, FlasherInterface $flasher){
-          //dd($request->all());
-
-            $request->validate([
+    // Insert customer data
+    public function create(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
             'name' => 'required|max:40',
-            'email' => 'required',
+            'email' => 'required|email',
             'number' => 'required',
             'address' => 'required',
-            'pic' => 'required|image|mimes:jpeg,png,gif|max:2048',
+            'pic' => 'required|image|mimes:jpeg,png,gif|max:2048', // Validate image file
         ]);
 
         $image_rename = '';
@@ -46,180 +45,155 @@ class CustomerController extends Controller
             $image->move(public_path('images'), $image_rename);
         }
 
+        // Insert the customer record into the database
         $insert = Customer::insertGetId([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'number' => $request['number'],
-            'address' => $request['address'],
-            'pic' => $image_rename ,
+            'name' => $request->name,
+            'email' => $request->email,
+            'number' => $request->number,
+            'address' => $request->address,
+            'pic' => $image_rename,
         ]);
 
+        // Redirect or return a response based on the result
         if ($insert) {
-            $flasher->addSuccess('Data Inserted Successfully.', [
-                'position' => 'top-center',
-                'timeout' => 3000,
-                ]
-            );
-            return redirect()->back();
-
+            return redirect()->route('customer.show')->with('success', 'Customer added successfully!');
         } else {
             return back()->with('fail', 'Data insertion failed');
         }
     }
 
-
-
-    // Edit customer form
-
-    // public function edit($id)
-    // {
-    //     $customer = Customer::findOrFail($id);
-    //     return Inertia::render('Customers/Edit', [
-    //         'customer' => $customer
-    //     ]);
-    // }
-
-
+    // Show the edit form for the customer
     public function edit(Customer $customer)
-{
-    return Inertia::render('Customers/Edit', [
-        'customer' => $customer
-    ]);
-}
-  // paginated customer list
-public function customerList()
-{
-    $customers = Customer::get();
-
-    return response()->json( $customers);
-}
-
-
-    //Search Customer
-
-
-// paginated customer search results
-
-
-
-public function dataShow($id)
-{
-    $customer = Customer::with(['creatorUser', 'editorUser'])->findOrFail($id);
-    return view('admin.customer.index', compact('customer'));
-}
-
+    {
+        return Inertia::render('Customers/Edit', [
+            'customer' => $customer
+        ]);
+    }
 
     // Update customer data
-
-    // public function update(Request $request, FlasherInterface $flasher){
-    //      //dd($request->all());
-    //     $id = $request->id;
-    //      $request->validate([
-    //         'name' => 'required|max:40',
-    //         'email' => 'required',
-    //         'number' => 'required',
-    //         'address' => 'required',
-    //         'pic' => 'nullable|mimes:jpeg,png,gif|max:2048',
-    //     ]);
-
-    //     $oldimg = Customer::findOrFail($id);
-    //     $deleteimg=public_path('images/'.$oldimg['pic']);
-    //     $image_rename = '';
-
-    //     if ($request->hasFile('pic')) {
-    //         $image = $request->file('pic');
-    //         $ext = $image->getClientOriginalExtension();
-
-    //         if(file_exists($deleteimg)){
-    //             unlink($deleteimg);
-    //           }
-
-    //         $image_rename = time() . '_' . rand(100000, 10000000) . '.' . $ext;
-    //         $image->move(public_path('images'), $image_rename);
-    //         }
-    //         else{
-    //             $image_rename=$oldimg['pic'];
-    //         }
-
-    //     $update = Customer::where('id',$id)->update([
-    //         'name' => $request->name,
-    //         'email' => $request->email,
-    //         'number' => $request->number,
-    //         'address' => $request->address,
-    //         'pic' => $image_rename,
-    //         'creator' => Auth::user()->id,
-    //         'slug' => uniqid().rand(10000, 10000000),
-    //     ]);
-
-    //     if ($update) {
-    //         $flasher->addSuccess('Update Successfully.', [
-    //             'position' => 'top-center',
-    //             'timeout' => 3000,
-    //             ]
-    //         );
-    //         return redirect()->route('customer.show');
-    //     } else {
-    //         return back()->with('fail', 'Data update failed');
-    //     }
-    // }
-
-
     public function update(Request $request, Customer $customer)
     {
+        // Validate the incoming request data
         $request->validate([
             'name' => 'required|max:40',
-            'email' => 'required|email' . $customer->id,
+            'email' => 'required|email',
             'number' => 'required',
             'address' => 'required',
-            'pic' => 'nullable|mimes:jpeg,png,gif|max:2048',
+            'pic' => 'nullable|image|mimes:jpeg,png,gif|max:2048', // Validate image file (optional)
         ]);
 
+        // Handle the image upload if there's a new image
         $image_rename = $customer->pic;
-
         if ($request->hasFile('pic')) {
             $image = $request->file('pic');
             $ext = $image->getClientOriginalExtension();
             $image_rename = time() . '_' . rand(100000, 10000000) . '.' . $ext;
-
-
-            $old_image_path = public_path('images/' . $customer->pic);
-            if (file_exists($old_image_path)) {
-                unlink($old_image_path);
-            }
-
-
             $image->move(public_path('images'), $image_rename);
+
+            // Delete the old image file if exists
+            if (file_exists(public_path('images/' . $customer->pic)) && $customer->pic) {
+                unlink(public_path('images/' . $customer->pic));
+            }
         }
 
-
+        // Update the customer record in the database
         $customer->update([
             'name' => $request->name,
             'email' => $request->email,
             'number' => $request->number,
             'address' => $request->address,
             'pic' => $image_rename,
-            'slug' => uniqid() . rand(10000, 10000000),
         ]);
 
+        // Redirect or return a response based on the result
         return redirect()->route('customer.show')->with('success', 'Customer updated successfully!');
     }
 
-
-
     // Delete customer data
-    public function destroy($id)
+    public function destroy(Customer $customer)
     {
-        $id = intval($id);
-        $customer = Customer::find($id);
-        if ($customer) {
-            $imagePath = public_path('images/' . $customer->pic);
-            if (is_file($imagePath) && file_exists($imagePath)) {
-                unlink($imagePath);
-            }
+        // Delete the customer image if exists
+        if (file_exists(public_path('images/' . $customer->pic)) && $customer->pic) {
+            unlink(public_path('images/' . $customer->pic));
+        }
 
-            $customer->delete();
+        // Delete the customer record from the database
+        $customer->delete();
 
-            return redirect()->route('customer.show')->with('success', 'Customer updated successfully!');
+        // Redirect with success message
+        return redirect()->route('customer.show')->with('success', 'Customer deleted successfully!');
     }
 }
-}
+
+
+// namespace App\Http\Controllers;
+
+
+// use App\Models\Customer;
+// use Illuminate\Http\Request;
+// use Flasher\Prime\FlasherInterface;
+// use Illuminate\Support\Facades\Auth;
+// use Inertia\Inertia;
+
+// class CustomerController extends Controller
+// // {
+
+//     public function index(){
+//         return Inertia::render('Customers/Create');
+//     }
+
+//     // Show all customers
+
+//     public function show(){
+//         $customers = Customer::all();
+//         return Inertia::render('Customers/Index', [
+//             'customers' => $customers
+//         ]);
+
+//     }
+
+//      // Insert customer data
+//     public function create(Request $request){
+//           //dd($request->all());
+
+//             $request->validate([
+//             'name' => 'required|max:40',
+//             'email' => 'required',
+//             'number' => 'required',
+//             'address' => 'required',
+//             'pic' => 'required|image|mimes:jpeg,png,gif|max:2048',
+//         ]);
+
+//         $image_rename = '';
+//         if ($request->hasFile('pic')) {
+//             $image = $request->file('pic');
+//             $ext = $image->getClientOriginalExtension();
+//             $image_rename = time() . '_' . rand(100000, 10000000) . '.' . $ext;
+//             $image->move(public_path('images'), $image_rename);
+//         }
+
+//         $insert = Customer::insertGetId([
+//             'name' => $request['name'],
+//             'email' => $request['email'],
+//             'number' => $request['number'],
+//             'address' => $request['address'],
+//             'pic' => $image_rename ,
+//         ]);
+
+//         if ($insert) {
+//             return redirect()->route('customer.show')->with('success', 'Customer added successfully!');
+
+//         } else {
+//             return back()->with('fail', 'Data insert failed');
+//         }
+//     }
+
+//     public function edit(Customer $customer)
+// {
+//     return Inertia::render('Customers/Edit', [
+//         'customer' => $customer
+//     ]);
+// }
+
+
+// }

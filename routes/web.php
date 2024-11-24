@@ -46,6 +46,14 @@ Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->
 
 });
 
+
+// Route::get('/customers/create', [CustomerController::class, 'index'])->name('customer.create');
+// Route::get('/customers', [CustomerController::class, 'show'])->name('customer.show');
+// Route::post('/customers', [CustomerController::class, 'create'])->name('customer.store');
+// Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
+// Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customer.update');
+// Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
