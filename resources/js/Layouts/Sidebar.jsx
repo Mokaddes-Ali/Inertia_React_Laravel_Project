@@ -11,7 +11,7 @@ export default function Sidebar() {
 
     useEffect(() => {
 
-        if (url.includes("posts") && activeDropdown !== 1) {
+        if (url.includes("products") && activeDropdown !== 1) {
             setActiveDropdown(1);
         } else if (url.includes("settings") && activeDropdown !== 2) {
             setActiveDropdown(2);
@@ -44,7 +44,7 @@ export default function Sidebar() {
                     </Link>
                 </div>
 
-                {/* Posts Dropdown */}
+                {/* Products Dropdown */}
                 <div className="px-4 py-2">
                     <button
                         onClick={() => toggleDropdown(1)}
@@ -53,7 +53,7 @@ export default function Sidebar() {
                         }`}
                     >
                         <span>
-                            <FontAwesomeIcon icon={faEdit} className="mr-2" /> Posts
+                            <FontAwesomeIcon icon={faEdit} className="mr-2" /> Products
                         </span>
                         <FontAwesomeIcon
                             icon={activeDropdown === 1 ? faChevronUp : faChevronDown}
@@ -63,24 +63,24 @@ export default function Sidebar() {
                     {activeDropdown === 1 && (
                         <div className="ml-4 mt-2 space-y-2">
                             <Link
-                                href="/posts/add"
+                                href="/products/add"
                                 className={`block py-2 px-3 rounded ${
-                                    url.startsWith("/posts/add")
+                                    url.startsWith("/products/add")
                                         ? "bg-gray-700 text-orange-500"
                                         : "hover:bg-gray-700"
                                 }`}
                             >
-                                <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Post
+                                <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Products
                             </Link>
                             <Link
-                                href="/posts/list"
+                                href="/products/list"
                                 className={`block py-2 px-3 rounded ${
-                                    url.startsWith("/posts/list")
+                                    url.startsWith("/products/list")
                                         ? "bg-gray-700 text-orange-500"
                                         : "hover:bg-gray-700"
                                 }`}
                             >
-                                <FontAwesomeIcon icon={faList} className="mr-2" /> All Posts
+                                <FontAwesomeIcon icon={faList} className="mr-2" /> All Products
                             </Link>
                         </div>
                     )}
@@ -147,14 +147,56 @@ export default function Sidebar() {
                     {activeDropdown === 3 && (
                         <div className="ml-4 mt-2 space-y-2">
                             <Link
-                                href="/customer"
+                                href="/customers/add"
                                 className={`block py-2 px-3 rounded ${
                                     url.startsWith("/customers/add")
                                         ? "bg-gray-700 text-orange-500"
                                         : "hover:bg-gray-700"
                                 }`}
                             >
-                                Add Customer
+                                <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Customer
+                            </Link>
+                            <Link
+                                href="/customers/show"
+                                className={`block py-2 px-3 rounded ${
+                                    url.startsWith("/customers/show")
+                                        ? "bg-gray-700 text-orange-500"
+                                        : "hover:bg-gray-700"
+                                }`}
+                            >
+                               <FontAwesomeIcon icon={faList} className="mr-2" />All Customer
+                            </Link>
+                        </div>
+                    )}
+                </div>
+
+                   {/* Brand Dropdown
+                   <div className="px-4 py-2">
+                    <button
+                        onClick={() => toggleDropdown(3)}
+                        className={`w-full text-left py-2 px-3 flex justify-between items-center rounded ${
+                            activeDropdown === 3 ? "bg-gray-700 text-orange-500" : "hover:bg-gray-700"
+                        }`}
+                    >
+                        <span>
+                            <FontAwesomeIcon icon={faUsers} className="mr-2" /> Customers
+                        </span>
+                        <FontAwesomeIcon
+                            icon={activeDropdown === 3 ? faChevronUp : faChevronDown}
+                            className="transform transition-transform duration-300"
+                        />
+                    </button>
+                    {activeDropdown === 3 && (
+                        <div className="ml-4 mt-2 space-y-2">
+                            <Link
+                                href="/brands/add"
+                                className={`block py-2 px-3 rounded ${
+                                    url.startsWith("/brands/add")
+                                        ? "bg-gray-700 text-orange-500"
+                                        : "hover:bg-gray-700"
+                                }`}
+                            >
+                               Add brand
                             </Link>
                             <Link
                                 href="/customer/show"
@@ -168,7 +210,9 @@ export default function Sidebar() {
                             </Link>
                         </div>
                     )}
-                </div>
+                </div> */}
+
+
 
                 {/* Additional Dropdowns */}
                 {[

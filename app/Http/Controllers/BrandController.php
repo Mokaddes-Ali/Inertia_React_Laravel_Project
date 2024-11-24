@@ -15,6 +15,12 @@ class BrandController extends Controller
         return Inertia::render('Brands/Index', ['brands' => $brands]);
     }
 
+    // Add Form
+    public function add()
+    {
+        return Inertia::render('Brands/Create');
+    }
+
     // Show All Data
     public function show()
     {

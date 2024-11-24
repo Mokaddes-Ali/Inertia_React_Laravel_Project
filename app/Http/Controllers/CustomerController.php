@@ -11,13 +11,14 @@ use Inertia\Inertia;
 class CustomerController extends Controller
 {
     // Show the create customer form
-    public function index()
+    public function add()
     {
         return Inertia::render('Customers/Create');
     }
 
+
     // Show all customers
-    public function show()
+    public function index()
     {
         $customers = Customer::all();
         return Inertia::render('Customers/Index', [

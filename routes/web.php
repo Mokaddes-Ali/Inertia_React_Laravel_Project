@@ -23,7 +23,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/post-add', [ProfileController::class, 'add'])->name('post.add');
+    Route::get('/products/add', [ProfileController::class, 'add'])->name('post.add');
 });
 
 
@@ -34,9 +34,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/customer', [CustomerController::class, 'index'])->name('index');
+    Route::get('/customers/add', [CustomerController::class, 'add'])->name('index');
     Route::post('/customer/submit', [CustomerController::class, 'create'])->name('create');
-    Route::get('/customer/show', [CustomerController::class, 'show']) -> name('customer.show');
+    Route::get('/customers/show', [CustomerController::class, 'index']) -> name('customer.show');
     Route::get('/customer/edit/{id}', [CustomerController::class, 'edit']);
     // Route::post('/customer/update', [CustomerController::class, 'update']);
     Route::get('/delete/{id}', [CustomerController::class, 'destroy']);
@@ -64,6 +64,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
+Route::get('/brands/add', [BrandController::class, 'add'])->name('brands.add');
 Route::post('/brands', [BrandController::class, 'create'])->name('brands.create');
 Route::get('/brands/edit/{id}', [BrandController::class, 'edit'])->name('brands.edit');
 Route::put('/brands/update/{id}', [BrandController::class, 'update'])->name('brands.update');
