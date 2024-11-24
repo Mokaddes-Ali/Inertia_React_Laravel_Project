@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\ProductsExport;
+
+use Inertia\Inertia;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -17,7 +17,10 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $brand = Brand::all();
-        return view('admin.product.add', compact('categories', 'brand'));
+        return Inertia::render('Products/Create', [
+            'categories' => $categories,
+            'brands' => $brand
+        ]);
     }
 
 
@@ -25,7 +28,9 @@ class ProductController extends Controller
      public function index()
      {
     $products = Product::with(['category', 'brand'])->orderBy('id', 'desc')->paginate(2);
-    return view('admin.product.show', compact('products'));
+    return Inertia::render('Products/Index', [
+        'products' => $products
+    ]);
     }
 
 
@@ -35,22 +40,6 @@ class ProductController extends Controller
     return view('admin.product.index', compact('product'));
 }
 
-
-    // export
-
-    public function export1()
-{
-    return Excel::download(new ProductsExport, 'products.xlsx');
-}
-public function export2()
-{
-    return Excel::download(new ProductsExport, 'products.csv');
-}
-
-public function export3()
-{
-    return Excel::download(new ProductsExport, 'products.pdf');
-}
 
    // Insert product data
     public function store(Request $request)
@@ -105,22 +94,16 @@ public function export3()
     return response()->json($products);
 }
 
-    //search product for api in invoice
-    // Controller method
-    public function searchProducts(Request $request)
-    {
-        $search = $request->query('search');
-        $products = Product::where('name', 'LIKE', "%{$search}%")->get(); // Case-insensitive match
-        return response()->json($products);
-    }
-
-    // edit product form
 
     public function edit($id){
         $product = Product::find($id);
         $categories = Category::all();
-        $brands = Brands::all();
-        return view('admin.product.edit', compact('product', 'categories', 'brands'));
+        $brands = Brand::all();
+        return Inertia::render('Products/Edit', [
+            'product' => $product,
+            'categories' => $categories,
+            'brands' => $brands
+        ]);
     }
 
     // Update product data

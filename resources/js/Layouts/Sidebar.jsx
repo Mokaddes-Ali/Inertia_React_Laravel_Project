@@ -241,9 +241,9 @@ export default function Sidebar() {
     {activeDropdown === 1 && (
         <div className="ml-4 mt-2 space-y-2">
             <Link
-                href="/products/add"
+                href="/products/create"
                 className={`block py-2 px-3 rounded ${
-                    url.startsWith("/products/add")
+                    url.startsWith("/products/create")
                         ? "bg-gray-700 text-orange-500"
                         : "hover:bg-gray-700"
                 }`}
@@ -251,9 +251,9 @@ export default function Sidebar() {
                 <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Product
             </Link>
             <Link
-                href="/products/list"
+                href="/products/show"
                 className={`block py-2 px-3 rounded ${
-                    url.startsWith("/products/list")
+                    url.startsWith("/products/show")
                         ? "bg-gray-700 text-orange-500"
                         : "hover:bg-gray-700"
                 }`}

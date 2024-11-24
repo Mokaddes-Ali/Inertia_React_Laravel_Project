@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
@@ -68,5 +69,20 @@ Route::middleware('auth')->group(function () {
     Route::post('/brands/update', [BrandController::class, 'update'])->name('brands.update');
     Route::delete('/delete/{id}', [BrandController::class, 'destroy']);
 });
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/products/show', [ProductController::class, 'index']);
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/products/edit/{id}', [ProductController::class, 'edit']);
+    Route::put('/products/update/{id}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/delete/{id}', [ProductController::class, 'destroy']);
+
+
+
+
+
+    });
 
 require __DIR__.'/auth.php';
