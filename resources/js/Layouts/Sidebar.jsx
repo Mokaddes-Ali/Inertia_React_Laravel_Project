@@ -290,7 +290,7 @@ export default function Sidebar() {
                                         : "hover:bg-gray-700"
                                 }`}
                             >
-                                Add Sales
+                                <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Sales
                             </Link>
                             <Link
                                 href="/sales/show"
@@ -300,7 +300,7 @@ export default function Sidebar() {
                                         : "hover:bg-gray-700"
                                 }`}
                             >
-                                All Sales
+                             <FontAwesomeIcon icon={faList} className="mr-2" /> All Sales
                             </Link>
                         </div>
                     )}

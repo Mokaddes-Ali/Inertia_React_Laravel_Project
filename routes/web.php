@@ -48,12 +48,6 @@ Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->
 });
 
 
-// Route::get('/customers/create', [CustomerController::class, 'index'])->name('customer.create');
-// Route::get('/customers', [CustomerController::class, 'show'])->name('customer.show');
-// Route::post('/customers', [CustomerController::class, 'create'])->name('customer.store');
-// Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
-// Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customer.update');
-// Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customer.destroy');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
@@ -63,11 +57,13 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 });
 
-Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
-Route::get('/brands/add', [BrandController::class, 'add'])->name('brands.add');
-Route::post('/brands', [BrandController::class, 'create'])->name('brands.create');
-Route::get('/brands/edit/{id}', [BrandController::class, 'edit'])->name('brands.edit');
-Route::put('/brands/update/{id}', [BrandController::class, 'update'])->name('brands.update');
-Route::delete('/brands/delete/{id}', [BrandController::class, 'destroy'])->name('brands.delete');
+Route::middleware('auth')->group(function () {
+    Route::get('/brands/add', [BrandController::class, 'index'])->name('index');
+    Route::post('/brands/submit', [BrandController::class, 'create'])->name('create');
+    Route::get('/brands/show', [BrandController::class, 'show']) -> name('brands.show');
+    Route::get('/brands/edit/{id}', [BrandController::class, 'edit']);
+    Route::post('/brands/update', [BrandController::class, 'update']);
+    Route::get('/delete/{id}', [BrandController::class, 'destroy']);
+});
 
 require __DIR__.'/auth.php';

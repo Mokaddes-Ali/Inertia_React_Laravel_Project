@@ -1,76 +1,77 @@
-import React, { useState } from "react";
-import { useForm } from "@inertiajs/react";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import React, { useState } from 'react';
+import { Inertia } from '@inertiajs/inertia';
 
-export default function Create() {
-    const { data, setData, post, errors, progress } = useForm({
-        brandName: "",
-        brandImg: null,
+const Create = () => {
+  const [brandName, setBrandName] = useState('');
+  const [brandImg, setBrandImg] = useState(null);
+
+  const handleBrandNameChange = (e) => setBrandName(e.target.value);
+  const handleBrandImgChange = (e) => setBrandImg(e.target.files[0]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('brandName', brandName);
+    formData.append('brandImg', brandImg);
+
+    Inertia.post('/brands/submit', formData, {
+      onSuccess: () => {
+        // handle success logic if necessary
+      }
     });
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        post(route("brands.create"));
-    };
-
-    return (
-
-        <>
-        <AuthenticatedLayout>
-        <div className="container mx-auto py-10">
-            <h1 className="text-2xl font-bold mb-5">Add New Brand</h1>
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                    <label htmlFor="brandName" className="block font-medium mb-1">
-                        Brand Name:
-                    </label>
-                    <input
-                        type="text"
-                        id="brandName"
-                        value={data.brandName}
-                        onChange={(e) => setData("brandName", e.target.value)}
-                        className="w-full border-gray-300 rounded shadow-sm focus:ring focus:ring-orange-500"
-                    />
-                    {errors.brandName && (
-                        <span className="text-red-500 text-sm">{errors.brandName}</span>
-                    )}
-                </div>
-
-                <div>
-                    <label htmlFor="brandImg" className="block font-medium mb-1">
-                        Brand Image:
-                    </label>
-                    <input
-                        type="file"
-                        id="brandImg"
-                        onChange={(e) => setData("brandImg", e.target.files[0])}
-                        className="w-full border-gray-300 rounded shadow-sm focus:ring focus:ring-orange-500"
-                    />
-                    {errors.brandImg && (
-                        <span className="text-red-500 text-sm">{errors.brandImg}</span>
-                    )}
-                    {progress && (
-                        <div className="mt-2 bg-gray-200 rounded-full overflow-hidden">
-                            <div
-                                className="bg-orange-500 text-xs leading-none py-1 text-center text-white"
-                                style={{ width: `${progress}%` }}
-                            >
-                                {progress}%
-                            </div>
-                        </div>
-                    )}
-                </div>
-
-                <button
-                    type="submit"
-                    className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600"
-                >
-                    Add Brand
-                </button>
-            </form>
+  return (
+    <div className="card">
+      <div className="card-header flex w-36 h-11">
+        <div className="mx-5 mt-2">
+          <a href="/brands/show">
+            <button type="button" className="btn btn-info text-lg">
+              Go To List
+            </button>
+          </a>
         </div>
-        </AuthenticatedLayout>
-        </>
-    );
-}
+        <div className="mx-5 mt-2 text-center text-2xl">
+          Add Brand
+        </div>
+      </div>
+
+      <div className="mx-5 mb-3 mt-3 col-md-10">
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="form-group col-md-8 mb-4">
+            <label htmlFor="brandName" className="mb-2">BrandName</label>
+            <input
+              type="text"
+              id="brandName"
+              name="brandName"
+              value={brandName}
+              onChange={handleBrandNameChange}
+              className="form-control"
+              placeholder="Enter Brand Name"
+            />
+          </div>
+
+          <div className="form-group col-md-8 mb-4">
+            <label htmlFor="brandImg" className="mb-2">BrandImg</label>
+            <input
+              type="file"
+              name="brandImg"
+              id="brandImg"
+              onChange={handleBrandImgChange}
+              className="form-control"
+              placeholder="Input an Image"
+            />
+          </div>
+
+          <button type="submit" className="btn btn-primary mt-3">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Create;
+
