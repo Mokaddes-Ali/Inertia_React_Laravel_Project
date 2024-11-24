@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Inertia } from '@inertiajs/inertia';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 const Edit = ({ customer }) => {
     const [values, setValues] = useState({
@@ -20,6 +21,7 @@ const Edit = ({ customer }) => {
     };
 
     return (
+        <AuthenticatedLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Edit Customer</h2>}>
         <div className="container mx-auto px-4 py-6">
             <h1 className="text-2xl font-bold mb-4">Edit Customer</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -69,6 +71,8 @@ const Edit = ({ customer }) => {
                 </button>
             </form>
         </div>
+
+        </AuthenticatedLayout>
     );
 };
 
