@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "@inertiajs/react";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 export default function Create() {
     const { data, setData, post, errors, progress } = useForm({
@@ -13,6 +14,9 @@ export default function Create() {
     };
 
     return (
+
+        <>
+        <AuthenticatedLayout>
         <div className="container mx-auto py-10">
             <h1 className="text-2xl font-bold mb-5">Add New Brand</h1>
 
@@ -66,5 +70,7 @@ export default function Create() {
                 </button>
             </form>
         </div>
+        </AuthenticatedLayout>
+        </>
     );
 }

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, usePage } from "@inertiajs/react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faTachometerAlt,faEdit,faChevronDown,faChevronUp,faCog,faPlus,faList,
-    faSlidersH,faUserCircle,faUsers,faTags,faBoxes,faShoppingCart,faDatabase,faChartLine
+import {faTachometerAlt,faChevronDown,faChevronUp,faCog,faPlus,faList,
+    faSlidersH,faUserCircle,faUsers,faDatabase,faTags,faBoxesStacked,faCartShopping, faFileInvoiceDollar
 } from '@fortawesome/free-solid-svg-icons';
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 
 export default function Sidebar() {
     const [activeDropdown, setActiveDropdown] = useState(null);
@@ -17,7 +18,15 @@ export default function Sidebar() {
             setActiveDropdown(2);
         } else if (url.includes("customer") && activeDropdown !== 3) {
             setActiveDropdown(3);
+        } else if (url.includes("brands") && activeDropdown !== 4) {
+            setActiveDropdown(4);
+        }else if (url.includes("categories") && activeDropdown !== 5) {
+            setActiveDropdown(5);
+        }else if (url.includes("sales") && activeDropdown !== 6) {
+            setActiveDropdown(6);
         }
+
+
     }, [url]);
 
     const toggleDropdown = (index) => {
@@ -44,47 +53,6 @@ export default function Sidebar() {
                     </Link>
                 </div>
 
-                {/* Products Dropdown */}
-                <div className="px-4 py-2">
-                    <button
-                        onClick={() => toggleDropdown(1)}
-                        className={`w-full text-left py-2 px-3 flex justify-between items-center rounded ${
-                            activeDropdown === 1 ? "bg-gray-700 text-orange-500" : "hover:bg-gray-700"
-                        }`}
-                    >
-                        <span>
-                            <FontAwesomeIcon icon={faEdit} className="mr-2" /> Products
-                        </span>
-                        <FontAwesomeIcon
-                            icon={activeDropdown === 1 ? faChevronUp : faChevronDown}
-                            className="transform transition-transform duration-300"
-                        />
-                    </button>
-                    {activeDropdown === 1 && (
-                        <div className="ml-4 mt-2 space-y-2">
-                            <Link
-                                href="/products/add"
-                                className={`block py-2 px-3 rounded ${
-                                    url.startsWith("/products/add")
-                                        ? "bg-gray-700 text-orange-500"
-                                        : "hover:bg-gray-700"
-                                }`}
-                            >
-                                <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Products
-                            </Link>
-                            <Link
-                                href="/products/list"
-                                className={`block py-2 px-3 rounded ${
-                                    url.startsWith("/products/list")
-                                        ? "bg-gray-700 text-orange-500"
-                                        : "hover:bg-gray-700"
-                                }`}
-                            >
-                                <FontAwesomeIcon icon={faList} className="mr-2" /> All Products
-                            </Link>
-                        </div>
-                    )}
-                </div>
 
                 {/* Settings Dropdown */}
                 <div className="px-4 py-2">
@@ -128,127 +96,239 @@ export default function Sidebar() {
                     )}
                 </div>
 
-                {/* Customer Dropdown */}
-                <div className="px-4 py-2">
+         {/* Customers Dropdown */}
+<div className="px-4 py-2">
+    <button
+        onClick={() => toggleDropdown(3)}
+        className={`w-full text-left py-2 px-3 flex justify-between items-center rounded ${
+            activeDropdown === 3 ? "bg-gray-700 text-orange-500" : "hover:bg-gray-700"
+        }`}
+    >
+        <span>
+            <FontAwesomeIcon icon={faUsers} className="mr-2" /> Customers
+        </span>
+        <FontAwesomeIcon
+            icon={activeDropdown === 3 ? faChevronUp : faChevronDown}
+            className="transform transition-transform duration-300"
+        />
+    </button>
+    {activeDropdown === 3 && (
+        <div className="ml-4 mt-2 space-y-2">
+            <Link
+                href="/customers/add"
+                className={`block py-2 px-3 rounded ${
+                    url.startsWith("/customers/add")
+                        ? "bg-gray-700 text-orange-500"
+                        : "hover:bg-gray-700"
+                }`}
+            >
+                <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Customer
+            </Link>
+            <Link
+                href="/customers/show"
+                className={`block py-2 px-3 rounded ${
+                    url.startsWith("/customers/show")
+                        ? "bg-gray-700 text-orange-500"
+                        : "hover:bg-gray-700"
+                }`}
+            >
+                <FontAwesomeIcon icon={faList} className="mr-2" /> All Customers
+            </Link>
+        </div>
+    )}
+</div>
+
+{/* Brands Dropdown */}
+<div className="px-4 py-2">
+    <button
+        onClick={() => toggleDropdown(4)}
+        className={`w-full text-left py-2 px-3 flex justify-between items-center rounded ${
+            activeDropdown === 4 ? "bg-gray-700 text-orange-500" : "hover:bg-gray-700"
+        }`}
+    >
+        <span>
+            <FontAwesomeIcon icon={faTags} className="mr-2" /> Brands
+        </span>
+        <FontAwesomeIcon
+            icon={activeDropdown === 4 ? faChevronUp : faChevronDown}
+            className="transform transition-transform duration-300"
+        />
+    </button>
+    {activeDropdown === 4 && (
+        <div className="ml-4 mt-2 space-y-2">
+            <Link
+                href="/brands/add"
+                className={`block py-2 px-3 rounded ${
+                    url.startsWith("/brands/add")
+                        ? "bg-gray-700 text-orange-500"
+                        : "hover:bg-gray-700"
+                }`}
+            >
+                <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Brand
+            </Link>
+            <Link
+                href="/brands/show"
+                className={`block py-2 px-3 rounded ${
+                    url.startsWith("/brands/show")
+                        ? "bg-gray-700 text-orange-500"
+                        : "hover:bg-gray-700"
+                }`}
+            >
+                <FontAwesomeIcon icon={faList} className="mr-2" /> All Brands
+            </Link>
+        </div>
+    )}
+</div>
+
+{/* Categories Dropdown */}
+<div className="px-4 py-2">
+    <button
+        onClick={() => toggleDropdown(5)}
+        className={`w-full text-left py-2 px-3 flex justify-between items-center rounded ${
+            activeDropdown === 5 ? "bg-gray-700 text-orange-500" : "hover:bg-gray-700"
+        }`}
+    >
+        <span>
+            <FontAwesomeIcon icon={faBoxesStacked} className="mr-2" /> Categories
+        </span>
+        <FontAwesomeIcon
+            icon={activeDropdown === 5 ? faChevronUp : faChevronDown}
+            className="transform transition-transform duration-300"
+        />
+    </button>
+    {activeDropdown === 5 && (
+        <div className="ml-4 mt-2 space-y-2">
+            <Link
+                href="/categories/add"
+                className={`block py-2 px-3 rounded ${
+                    url.startsWith("/categories/add")
+                        ? "bg-gray-700 text-orange-500"
+                        : "hover:bg-gray-700"
+                }`}
+            >
+                <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Category
+            </Link>
+            <Link
+                href="/categories/show"
+                className={`block py-2 px-3 rounded ${
+                    url.startsWith("/categories/show")
+                        ? "bg-gray-700 text-orange-500"
+                        : "hover:bg-gray-700"
+                }`}
+            >
+                <FontAwesomeIcon icon={faList} className="mr-2" /> All Categories
+            </Link>
+        </div>
+    )}
+</div>
+
+{/* Products Dropdown */}
+<div className="px-4 py-2">
+    <button
+        onClick={() => toggleDropdown(1)}
+        className={`w-full text-left py-2 px-3 flex justify-between items-center rounded ${
+            activeDropdown === 1 ? "bg-gray-700 text-orange-500" : "hover:bg-gray-700"
+        }`}
+    >
+        <span>
+            <FontAwesomeIcon icon={faCartShopping} className="mr-2" /> Products
+        </span>
+        <FontAwesomeIcon
+            icon={activeDropdown === 1 ? faChevronUp : faChevronDown}
+            className="transform transition-transform duration-300"
+        />
+    </button>
+    {activeDropdown === 1 && (
+        <div className="ml-4 mt-2 space-y-2">
+            <Link
+                href="/products/add"
+                className={`block py-2 px-3 rounded ${
+                    url.startsWith("/products/add")
+                        ? "bg-gray-700 text-orange-500"
+                        : "hover:bg-gray-700"
+                }`}
+            >
+                <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Product
+            </Link>
+            <Link
+                href="/products/list"
+                className={`block py-2 px-3 rounded ${
+                    url.startsWith("/products/list")
+                        ? "bg-gray-700 text-orange-500"
+                        : "hover:bg-gray-700"
+                }`}
+            >
+                <FontAwesomeIcon icon={faList} className="mr-2" /> All Products
+            </Link>
+        </div>
+    )}
+</div>
+
+                   {/* // Sales Dropdown */}
+                   <div className="px-4 py-2">
                     <button
-                        onClick={() => toggleDropdown(3)}
+                        onClick={() => toggleDropdown(6)}
                         className={`w-full text-left py-2 px-3 flex justify-between items-center rounded ${
-                            activeDropdown === 3 ? "bg-gray-700 text-orange-500" : "hover:bg-gray-700"
+                            activeDropdown === 6 ? "bg-gray-700 text-orange-500" : "hover:bg-gray-700"
                         }`}
                     >
                         <span>
-                            <FontAwesomeIcon icon={faUsers} className="mr-2" /> Customers
+                            <FontAwesomeIcon icon={faFileInvoiceDollar} className="mr-2" /> Sales
                         </span>
                         <FontAwesomeIcon
-                            icon={activeDropdown === 3 ? faChevronUp : faChevronDown}
+                            icon={activeDropdown === 6 ? faChevronUp : faChevronDown}
                             className="transform transition-transform duration-300"
                         />
                     </button>
-                    {activeDropdown === 3 && (
+                    {activeDropdown === 6 && (
                         <div className="ml-4 mt-2 space-y-2">
                             <Link
-                                href="/customers/add"
+                                href="/sales/add"
                                 className={`block py-2 px-3 rounded ${
-                                    url.startsWith("/customers/add")
+                                    url.startsWith("/sales/add")
                                         ? "bg-gray-700 text-orange-500"
                                         : "hover:bg-gray-700"
                                 }`}
                             >
-                                <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Customer
+                                Add Sales
                             </Link>
                             <Link
-                                href="/customers/show"
+                                href="/sales/show"
                                 className={`block py-2 px-3 rounded ${
-                                    url.startsWith("/customers/show")
+                                    url.startsWith("/sales/show")
                                         ? "bg-gray-700 text-orange-500"
                                         : "hover:bg-gray-700"
                                 }`}
                             >
-                               <FontAwesomeIcon icon={faList} className="mr-2" />All Customer
+                                All Sales
                             </Link>
                         </div>
                     )}
                 </div>
 
-                   {/* Brand Dropdown
-                   <div className="px-4 py-2">
-                    <button
-                        onClick={() => toggleDropdown(3)}
-                        className={`w-full text-left py-2 px-3 flex justify-between items-center rounded ${
-                            activeDropdown === 3 ? "bg-gray-700 text-orange-500" : "hover:bg-gray-700"
+                  {/* Database Link */}
+                  <div className="px-4 py-2">
+                    <Link
+                        href="/database"
+                        className={`block py-2 px-3 rounded ${
+                            url.startsWith("/database")
+                                ? "bg-gray-700 text-orange-500"
+                                : "hover:bg-gray-700"
                         }`}
                     >
-                        <span>
-                            <FontAwesomeIcon icon={faUsers} className="mr-2" /> Customers
-                        </span>
-                        <FontAwesomeIcon
-                            icon={activeDropdown === 3 ? faChevronUp : faChevronDown}
-                            className="transform transition-transform duration-300"
-                        />
-                    </button>
-                    {activeDropdown === 3 && (
-                        <div className="ml-4 mt-2 space-y-2">
-                            <Link
-                                href="/brands/add"
-                                className={`block py-2 px-3 rounded ${
-                                    url.startsWith("/brands/add")
-                                        ? "bg-gray-700 text-orange-500"
-                                        : "hover:bg-gray-700"
-                                }`}
-                            >
-                               Add brand
-                            </Link>
-                            <Link
-                                href="/customer/show"
-                                className={`block py-2 px-3 rounded ${
-                                    url.startsWith("/customers/list")
-                                        ? "bg-gray-700 text-orange-500"
-                                        : "hover:bg-gray-700"
-                                }`}
-                            >
-                                Customer List
-                            </Link>
-                        </div>
-                    )}
-                </div> */}
+                        <FontAwesomeIcon icon={faDatabase} className="mr-2" /> Dashboard
+                    </Link>
+                </div>
+
+                <ResponsiveNavLink
+    as="button"
+    method="post"
+    href={route('logout')}
+>
+    Log Out
+</ResponsiveNavLink>
 
 
-
-                {/* Additional Dropdowns */}
-                {[
-                    { label: "Category", icon: faTags, id: 4 },
-                    { label: "Brand", icon: faChartLine, id: 5 },
-                    { label: "Product", icon: faBoxes, id: 6 },
-                    { label: "Sale", icon: faShoppingCart, id: 7 },
-                    { label: "Database", icon: faDatabase, id: 8 }
-                ].map((item) => (
-                    <div key={item.id} className="px-4 py-2">
-                        <button
-                            onClick={() => toggleDropdown(item.id)}
-                            className={`w-full text-left py-2 px-3 flex justify-between items-center rounded ${
-                                activeDropdown === item.id ? "bg-gray-700 text-orange-500" : "hover:bg-gray-700"
-                            }`}
-                        >
-                            <span>
-                                <FontAwesomeIcon icon={item.icon} className="mr-2" /> {item.label}
-                            </span>
-                            <FontAwesomeIcon
-                                icon={activeDropdown === item.id ? faChevronUp : faChevronDown}
-                                className="transform transition-transform duration-300"
-                            />
-                        </button>
-                        {activeDropdown === item.id && (
-                            <div className="ml-4 mt-2 space-y-2">
-                                <Link href={`/${item.label.toLowerCase()}/add`} className="block py-2 px-3 rounded hover:bg-gray-700">
-                                    Add {item.label}
-                                </Link>
-                                <Link href={`/${item.label.toLowerCase()}/list`} className="block py-2 px-3 rounded hover:bg-gray-700">
-                                    {item.label} List
-                                </Link>
-                            </div>
-                        )}
-                    </div>
-                ))}
             </nav>
         </div>
     );
