@@ -62,7 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/brands/submit', [BrandController::class, 'create'])->name('create');
     Route::get('/brands/show', [BrandController::class, 'show']) -> name('brands.show');
     Route::get('/brands/edit/{id}', [BrandController::class, 'edit']);
-    Route::post('/brands/update', [BrandController::class, 'update']);
+    Route::post('/brands/update', [BrandController::class, 'update'])->name('brands.update');
     Route::get('/delete/{id}', [BrandController::class, 'destroy']);
 });
 

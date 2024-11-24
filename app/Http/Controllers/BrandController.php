@@ -98,7 +98,7 @@ public function update(Request $request){
     ]);
 
     if ($update) {
-        return back()->with('success', 'Data updated successfully');
+        return redirect( route('brands.show') )->with('success', 'Data updated successfully');
     } else {
         return back()->with('fail', 'Data update failed');
     }
