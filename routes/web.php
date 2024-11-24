@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
@@ -61,5 +62,11 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 });
+
+Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
+Route::post('/brands', [BrandController::class, 'create'])->name('brands.create');
+Route::get('/brands/edit/{id}', [BrandController::class, 'edit'])->name('brands.edit');
+Route::put('/brands/update/{id}', [BrandController::class, 'update'])->name('brands.update');
+Route::delete('/brands/delete/{id}', [BrandController::class, 'destroy'])->name('brands.delete');
 
 require __DIR__.'/auth.php';
