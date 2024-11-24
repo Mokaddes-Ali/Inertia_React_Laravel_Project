@@ -16,9 +16,9 @@ public function index(){
 
    //show all data
 public function show(){
-    $all = Brand::orderBy('id', 'desc')->paginate(4);
+    $brands = Brand::all();
     return Inertia::render('Brands/Index', [
-        'all' => $all
+        'brands' => $brands
     ]);
 }
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Inertia } from '@inertiajs/inertia';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 const Create = () => {
   const [brandName, setBrandName] = useState('');
@@ -17,61 +18,58 @@ const Create = () => {
 
     Inertia.post('/brands/submit', formData, {
       onSuccess: () => {
-        // handle success logic if necessary
-      }
+        // Add success handling logic if needed (e.g., show a success notification)
+      },
     });
   };
 
   return (
-    <div className="card">
-      <div className="card-header flex w-36 h-11">
-        <div className="mx-5 mt-2">
+    <AuthenticatedLayout>
+      <div className="card">
+        <div className="card-header flex items-center justify-between p-4">
           <a href="/brands/show">
             <button type="button" className="btn btn-info text-lg">
               Go To List
             </button>
           </a>
+          <h2 className="text-2xl text-center">Add Brand</h2>
         </div>
-        <div className="mx-5 mt-2 text-center text-2xl">
-          Add Brand
+
+        <div className="mx-5 mb-3 mt-3 col-md-10">
+          <form onSubmit={handleSubmit} encType="multipart/form-data">
+            <div className="form-group col-md-8 mb-4">
+              <label htmlFor="brandName" className="mb-2">Brand Name</label>
+              <input
+                type="text"
+                id="brandName"
+                name="brandName"
+                value={brandName}
+                onChange={handleBrandNameChange}
+                className="form-control"
+                placeholder="Enter Brand Name"
+              />
+            </div>
+
+            <div className="form-group col-md-8 mb-4">
+              <label htmlFor="brandImg" className="mb-2">Brand Image</label>
+              <input
+                type="file"
+                name="brandImg"
+                id="brandImg"
+                onChange={handleBrandImgChange}
+                className="form-control"
+                placeholder="Upload an Image"
+              />
+            </div>
+
+            <button type="submit" className="btn btn-primary mt-3">
+              Submit
+            </button>
+          </form>
         </div>
       </div>
-
-      <div className="mx-5 mb-3 mt-3 col-md-10">
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <div className="form-group col-md-8 mb-4">
-            <label htmlFor="brandName" className="mb-2">BrandName</label>
-            <input
-              type="text"
-              id="brandName"
-              name="brandName"
-              value={brandName}
-              onChange={handleBrandNameChange}
-              className="form-control"
-              placeholder="Enter Brand Name"
-            />
-          </div>
-
-          <div className="form-group col-md-8 mb-4">
-            <label htmlFor="brandImg" className="mb-2">BrandImg</label>
-            <input
-              type="file"
-              name="brandImg"
-              id="brandImg"
-              onChange={handleBrandImgChange}
-              className="form-control"
-              placeholder="Input an Image"
-            />
-          </div>
-
-          <button type="submit" className="btn btn-primary mt-3">
-            Submit
-          </button>
-        </form>
-      </div>
-    </div>
+    </AuthenticatedLayout>
   );
 };
 
 export default Create;
-

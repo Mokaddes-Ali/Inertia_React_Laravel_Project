@@ -1,90 +1,91 @@
 import React from 'react';
 import { Link } from '@inertiajs/inertia-react';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-const  Index = ({ brands, links }) => {
+const Index = ({ brands }) => {
   const handleDelete = (id) => {
-    if (confirm('Are You Sure Delete!')) {
-      // Replace this with your actual delete logic, e.g., Inertia.delete(`/delete/${id}`)
-      console.log(`Delete brand with id: ${id}`);
+    if (confirm('Are you sure you want to delete this brand?')) {
+      // Replace with your actual delete logic, e.g., Inertia.delete(`/brands/delete/${id}`)
+      console.log(`Deleting brand with ID: ${id}`);
     }
   };
 
   return (
-    <div className="card">
-      <div className="card-header flex items-center w-36 h-11">
-        <div className="mx-5 mt-2">
-          <Link href="/brands">
-            <button type="button" className="btn btn-danger text-lg">Add Brand</button>
+    <AuthenticatedLayout>
+      <div className="container mx-auto px-4 py-6">
+        {/* Header Section */}
+        <div className="flex justify-between items-center bg-gray-100 p-4 rounded-md shadow-md mb-6">
+          <h1 className="text-2xl font-semibold text-gray-700">Brand List</h1>
+          <Link
+            href="/brands"
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          >
+            Add Brand
           </Link>
         </div>
-        <div className="mx-5 mt-2 text-center text-2xl">Brand List</div>
-      </div>
 
-      <table className="table table-striped table-responsive table-dark mt-5">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Brand Name</th>
-            <th scope="col">Brand Image</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {brands.map((brand) => (
-            <tr key={brand.id}>
-              <th scope="row">{brand.id}</th>
-              <td>{brand.brandName}</td>
-              <td>
-                <img
-                  src={`/BrandImage/${brand.brandImg}`}
-                  alt="Brand"
-                  width="50"
-                  height="50"
-                  className="rounded"
-                />
-              </td>
-              <td className="flex space-x-2">
-                {/* Edit Button */}
-                <Link
-                  href={`/brands/edit/${brand.id}`}
-                  className="btn btn-primary btn-sm"
-                  title="Edit"
-                >
-                  <i className="fa fa-pencil-alt" />
-                </Link>
-                {/* Delete Button */}
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(brand.id)}
-                  title="Delete"
-                >
-                  <i className="fa fa-times" />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {/* Pagination */}
-      <div className="mt-4 flex justify-center">
-        {links.map((link, index) => (
-          <Link
-            key={index}
-            href={link.url || '#'}
-            className={`px-3 py-1 mx-1 rounded ${
-              link.active ? 'bg-gray-700 text-orange-500' : 'hover:bg-gray-700'
-            }`}
-            dangerouslySetInnerHTML={{ __html: link.label }}
-          />
-        ))}
+        {/* Table Section */}
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto bg-white border rounded-lg shadow-md">
+            <thead className="bg-gray-800 text-white">
+              <tr>
+                <th className="px-4 py-2 text-left">ID</th>
+                <th className="px-4 py-2 text-left">Brand Name</th>
+                <th className="px-4 py-2 text-left">Brand Image</th>
+                <th className="px-4 py-2 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {brands.length > 0 ? (
+                brands.map((brand) => (
+                  <tr key={brand.id} className="border-b">
+                    <td className="px-4 py-2">{brand.id}</td>
+                    <td className="px-4 py-2">{brand.brandName}</td>
+                    <td className="px-4 py-2">
+                      <img
+                        src={`/BrandImage/${brand.brandImg}`}
+                        alt={brand.brandName}
+                        className="w-12 h-12 rounded object-cover border"
+                      />
+                    </td>
+                    <td className="px-4 py-2 text-center">
+                      <div className="flex justify-center space-x-3">
+                        {/* Edit Button */}
+                        <Link
+                          href={`/brands/edit/${brand.id}`}
+                          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                        >
+                          Edit
+                        </Link>
+                        {/* Delete Button */}
+                        <button
+                          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                          onClick={() => handleDelete(brand.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="4"
+                    className="px-4 py-6 text-center text-gray-500"
+                  >
+                    No brands found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </AuthenticatedLayout>
   );
 };
 
-
-
-
 export default Index;
+
 
