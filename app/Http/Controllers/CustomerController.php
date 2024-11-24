@@ -79,22 +79,22 @@ class CustomerController extends Controller
             'email' => 'required|email',
             'number' => 'required',
             'address' => 'required',
-            'pic' => 'nullable|image|mimes:jpeg,png,gif|max:2048', // Validate image file (optional)
+            // 'pic' => 'nullable|image|mimes:jpeg,png,gif|max:2048', // Validate image file (optional)
         ]);
 
-        // Handle the image upload if there's a new image
-        $image_rename = $customer->pic;
-        if ($request->hasFile('pic')) {
-            $image = $request->file('pic');
-            $ext = $image->getClientOriginalExtension();
-            $image_rename = time() . '_' . rand(100000, 10000000) . '.' . $ext;
-            $image->move(public_path('images'), $image_rename);
+        // // Handle the image upload if there's a new image
+        // $image_rename = $customer->pic;
+        // if ($request->hasFile('pic')) {
+        //     $image = $request->file('pic');
+        //     $ext = $image->getClientOriginalExtension();
+        //     $image_rename = time() . '_' . rand(100000, 10000000) . '.' . $ext;
+        //     $image->move(public_path('images'), $image_rename);
 
-            // Delete the old image file if exists
-            if (file_exists(public_path('images/' . $customer->pic)) && $customer->pic) {
-                unlink(public_path('images/' . $customer->pic));
-            }
-        }
+        //     // Delete the old image file if exists
+        //     if (file_exists(public_path('images/' . $customer->pic)) && $customer->pic) {
+        //         unlink(public_path('images/' . $customer->pic));
+        //     }
+        // }
 
         // Update the customer record in the database
         $customer->update([
@@ -102,7 +102,7 @@ class CustomerController extends Controller
             'email' => $request->email,
             'number' => $request->number,
             'address' => $request->address,
-            'pic' => $image_rename,
+            // 'pic' => $image_rename,
         ]);
 
         // Redirect or return a response based on the result
