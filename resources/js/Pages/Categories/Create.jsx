@@ -1,59 +1,103 @@
-import React from "react";
-import { useForm } from "@inertiajs/react";
+import React from 'react';
+import { useForm } from '@inertiajs/inertia-react';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-export default function Create() {
-    const { data, setData, post, reset, errors } = useForm({
-        name: "",
-        remarks: "",
-    });
+const Create = () => {
+  const { data, setData, post, errors } = useForm({
+    name: '',
+    remarks: '',
+  });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        post("/categories", {
-            onSuccess: () => reset(), // সফল হলে ইনপুট রিসেট হবে।
-        });
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    post('/category/store'); // Replace with your actual route
+  };
 
-    return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">Add Category</h1>
+  return (
+    <>
+    <AuthenticatedLayout>
+    <div className="container mx-auto mt-5">
+      {/* Header Section */}
+      <div className="flex justify-start items-center p-4 bg-gray-100 rounded-md shadow-md">
+        <a href="/category/show">
+          <button
+            type="button"
+            className="btn btn-info bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Go To List
+          </button>
+        </a>
+        <h3 className="mx-5 text-lg font-semibold text-gray-700">Add Category</h3>
+      </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Name Field */}
-                <div>
-                    <label className="block font-medium">Name:</label>
-                    <input
-                        type="text"
-                        value={data.name}
-                        onChange={(e) => setData("name", e.target.value)}
-                        className="border rounded p-2 w-full"
-                    />
-                    {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
-                </div>
+      {/* Form Section */}
+      <div className="mt-6 max-w-3xl mx-auto">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white p-6 rounded-md shadow-md space-y-4"
+        >
+          {/* Name Field */}
+          <div className="form-group mb-4">
+            <label htmlFor="name" className="block text-gray-700 mb-2">
+              Name:
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={data.name}
+              onChange={(e) => setData('name', e.target.value)}
+              className={`form-control block w-full px-4 py-2 border ${
+                errors.name
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-gray-300 focus:ring-blue-500'
+              } rounded-md`}
+              required
+            />
+            {errors.name ? (
+              <div className="text-red-500 text-sm mt-1">{errors.name}</div>
+            ) : (
+              <div className="text-green-500 text-sm mt-1">Looks good!</div>
+            )}
+          </div>
 
-                {/* Remarks Field */}
-                <div>
-                    <label className="block font-medium">Remarks:</label>
-                    <textarea
-                        value={data.remarks}
-                        onChange={(e) => setData("remarks", e.target.value)}
-                        className="border rounded p-2 w-full"
-                    ></textarea>
-                    {errors.remarks && (
-                        <span className="text-red-500 text-sm">{errors.remarks}</span>
-                    )}
-                </div>
+          {/* Remarks Field */}
+          <div className="form-group mb-4">
+            <label htmlFor="remarks" className="block text-gray-700 mb-2">
+              Remarks:
+            </label>
+            <textarea
+              id="remarks"
+              name="remarks"
+              value={data.remarks}
+              onChange={(e) => setData('remarks', e.target.value)}
+              className={`form-control block w-full px-4 py-2 border ${
+                errors.remarks
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-gray-300 focus:ring-blue-500'
+              } rounded-md`}
+            />
+            {errors.remarks && (
+              <div className="text-red-500 text-sm mt-1">{errors.remarks}</div>
+            )}
+          </div>
 
-                {/* Submit Button */}
-                <div>
-                    <button
-                        type="submit"
-                        className="bg-blue-500 text-white px-4 py-2 rounded"
-                    >
-                        Add Category
-                    </button>
-                </div>
-            </form>
-        </div>
-    );
-}
+          {/* Submit Button */}
+          <div className="form-group">
+            <button
+              type="submit"
+              className="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              Create
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    </AuthenticatedLayout>
+    </>
+  );
+};
+
+export default Create;
+

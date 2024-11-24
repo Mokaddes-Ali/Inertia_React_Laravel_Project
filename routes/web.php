@@ -49,12 +49,15 @@ Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->
 
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-    Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
-    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+Route::middleware('auth')->group(function () {
+    Route::get('/categories/add', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/categories/show', [CategoryController::class, 'show']);
+    Route::get('/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::post('/category/update', [CategoryController::class, 'update'])->name('category.update');
+    Route::get('/delete/category/{id}', [CategoryController::class, 'destroy']);
+
+
 });
 
 Route::middleware('auth')->group(function () {
