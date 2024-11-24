@@ -63,7 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/brands/show', [BrandController::class, 'show']) -> name('brands.show');
     Route::get('/brands/edit/{id}', [BrandController::class, 'edit']);
     Route::post('/brands/update', [BrandController::class, 'update'])->name('brands.update');
-    Route::get('/delete/{id}', [BrandController::class, 'destroy']);
+    Route::delete('/delete/{id}', [BrandController::class, 'destroy']);
 });
 
 require __DIR__.'/auth.php';

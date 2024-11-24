@@ -1,18 +1,24 @@
 import React from 'react';
-import { Link } from '@inertiajs/inertia-react';
+import { Link, usePage } from '@inertiajs/inertia-react';
+import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 const Index = ({ brands }) => {
+
+
   const handleDelete = (id) => {
     if (confirm('Are you sure you want to delete this brand?')) {
-      // Replace with your actual delete logic, e.g., Inertia.delete(`/brands/delete/${id}`)
-      console.log(`Deleting brand with ID: ${id}`);
+      Inertia.delete(`/delete/${id}`, {
+        onSuccess: () => alert('Brand deleted successfully!'),
+        onError: () => alert('Failed to delete the brand.'),
+      });
     }
   };
 
   return (
     <AuthenticatedLayout>
       <div className="container mx-auto px-4 py-6">
+
         {/* Header Section */}
         <div className="flex justify-between items-center bg-gray-100 p-4 rounded-md shadow-md mb-6">
           <h1 className="text-2xl font-semibold text-gray-700">Brand List</h1>
@@ -87,5 +93,3 @@ const Index = ({ brands }) => {
 };
 
 export default Index;
-
-

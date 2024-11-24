@@ -105,17 +105,23 @@ public function update(Request $request){
 }
 
 
-public function destroy($id){
-    $id=intval($id);
-    $brand =Brand::find($id);
+public function destroy($id)
+{
+    $id = intval($id);
+    $brand = Brand::find($id);
+
     if ($brand) {
         $imagePath = public_path('BrandImage/' . $brand->brandImg);
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
         $brand->delete();
-        return back()->with('success', 'Data deleted successfully');
+
+        return redirect()->back()->with('success', 'Data deleted successfully');
     }
+
+    return redirect()->back()->with('error', 'Failed to delete the brand');
 }
+
 }
 
