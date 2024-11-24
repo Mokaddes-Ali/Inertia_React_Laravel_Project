@@ -165,59 +165,49 @@ public function dataShow($id)
 
 
     public function update(Request $request, Customer $customer)
-{
+    {
+        $request->validate([
+            'name' => 'required|max:40',
+            'email' => 'required|email' . $customer->id,
+            'number' => 'required',
+            'address' => 'required',
+            'pic' => 'nullable|mimes:jpeg,png,gif|max:2048',
+        ]);
 
-    //     $id = $request->id;
-    //      $request->validate([
-    //         'name' => 'required|max:40',
-    //         'email' => 'required',
-    //         'number' => 'required',
-    //         'address' => 'required',
-    //         'pic' => 'nullable|mimes:jpeg,png,gif|max:2048',
-    //     ]);
+        $image_rename = $customer->pic;
 
-    //     $oldimg = Customer::findOrFail($id);
-    //     $deleteimg=public_path('images/'.$oldimg['pic']);
-    //     $image_rename = '';
+        if ($request->hasFile('pic')) {
+            $image = $request->file('pic');
+            $ext = $image->getClientOriginalExtension();
+            $image_rename = time() . '_' . rand(100000, 10000000) . '.' . $ext;
 
-    //     if ($request->hasFile('pic')) {
-    //         $image = $request->file('pic');
-    //         $ext = $image->getClientOriginalExtension();
 
-    //         if(file_exists($deleteimg)){
-    //             unlink($deleteimg);
-    //           }
+            $old_image_path = public_path('images/' . $customer->pic);
+            if (file_exists($old_image_path)) {
+                unlink($old_image_path);
+            }
 
-    //         $image_rename = time() . '_' . rand(100000, 10000000) . '.' . $ext;
-    //         $image->move(public_path('images'), $image_rename);
-    //         }
-    //         else{
-    //             $image_rename=$oldimg['pic'];
-    //         }
 
-    //     $update = Customer::where('id',$id)->update([
-    //         'name' => $request->name,
-    //         'email' => $request->email,
-    //         'number' => $request->number,
-    //         'address' => $request->address,
-    //         'pic' => $image_rename,
-    //         'creator' => Auth::user()->id,
-    //         'slug' => uniqid().rand(10000, 10000000),
-    //     ]);
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:customers,email,' . $customer->id,
-        'number' => 'nullable|string',
-        'address' => 'nullable|string',
-        'status' => 'required|integer',
-    ]);
+            $image->move(public_path('images'), $image_rename);
+        }
 
-    $customer->update($request->all());
-    return redirect()->route('customer.show')->with('success', 'Customer updated successfully!');
-}
+
+        $customer->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'number' => $request->number,
+            'address' => $request->address,
+            'pic' => $image_rename,
+            'slug' => uniqid() . rand(10000, 10000000),
+        ]);
+
+        return redirect()->route('customer.show')->with('success', 'Customer updated successfully!');
+    }
+
+
 
     // Delete customer data
-    public function destroy($id, FlasherInterface $flasher)
+    public function destroy($id)
     {
         $id = intval($id);
         $customer = Customer::find($id);
@@ -228,18 +218,8 @@ public function dataShow($id)
             }
 
             $customer->delete();
-            $flasher->addSuccess('Deleted successfully.', [
-                'position' => 'top-center',
-                'timeout' => 3000,
-            ]);
 
-            return redirect()->back();
-        }
-        $flasher->addError('Customer not found.', [
-            'position' => 'top-center',
-            'timeout' => 3000,
-        ]);
-
-        return redirect()->back();
+            return redirect()->route('customer.show')->with('success', 'Customer updated successfully!');
     }
+}
 }

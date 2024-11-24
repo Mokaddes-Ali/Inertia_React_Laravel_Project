@@ -7,7 +7,7 @@ export default function Topbar({ user }) {
     const currentUser = user || fallbackUser;
 
     return (
-        <div className="w-full bg-white shadow flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16">
+        <div className="w-full bg-slate-600 fixed shadow flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16">
             {/* Logo or Title */}
             <div className="flex items-center">
                 <Link href="/">

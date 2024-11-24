@@ -14,13 +14,13 @@ const Index = ({ customers }) => {
 
     return (
         <AuthenticatedLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Customer List</h2>}>
-        <div className="container mx-auto px-4 py-6">
-            <h1 className="text-2xl font-bold mb-4">Customer List</h1>
+        <div className="container mx-auto px-2 ">
             <table className="min-w-full bg-white border border-gray-300">
                 <thead>
                     <tr>
                         <th className="py-2 px-4 border">Id</th>
                         <th className="py-2 px-4 border">Name</th>
+                        <th className="py-2 px-4 border">Image</th>
                         <th className="py-2 px-4 border">Email</th>
                         <th className="py-2 px-4 border">Number</th>
                         <th className="py-2 px-4 border">Address</th>
@@ -32,7 +32,16 @@ const Index = ({ customers }) => {
                         <tr key={customer.id} className="hover:bg-gray-100">
                             <td className="py-2 px-4 border">{index + 1}</td>
                             <td className="py-2 px-4 border">{customer.name}</td>
-                            <td className="py-2 px-4 border">{customer.email}</td>
+                            <td className="py-2 px-4 border">
+    <img
+        src={`/images/${customer.pic}`}
+        alt={customer.name}
+        className="rounded-full border border-gray-300 w-12 h-12 object-cover"
+    />
+</td>
+
+<td className="py-2 px-4 border">{customer.email}</td>
+
                             <td className="py-2 px-4 border">{customer.number || 'N/A'}</td>
                             <td className="py-2 px-4 border">{customer.address || 'N/A'}</td>
                             <td className="py-2 px-4 border flex gap-2">

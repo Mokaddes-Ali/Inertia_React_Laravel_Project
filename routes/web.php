@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/delete/{id}', [CustomerController::class, 'destroy']);
 
 Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
-Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
+Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
 Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
 
 });
