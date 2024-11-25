@@ -17,10 +17,10 @@ const Index = ({ brands }) => {
 
   return (
     <AuthenticatedLayout>
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto py-4 mt-8">
 
         {/* Header Section */}
-        <div className="flex justify-between items-center bg-gray-100 p-4 rounded-md shadow-md mb-6">
+        <div className="flex justify-between items-center p-4 rounded-md mb-2">
           <h1 className="text-2xl font-semibold text-gray-700">Brand List</h1>
           <Link
             href="/brands"

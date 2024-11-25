@@ -20,7 +20,7 @@ const Edit = ({ record }) => {
     return (
         <>
             <AuthenticatedLayout>
-                <div className="bg-white shadow-md rounded-lg p-6">
+                <div className="bg-white shadow-md rounded-lg mt-8 p-6">
                     {/* Header */}
                     <div className="flex justify-between items-center mb-6">
 

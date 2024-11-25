@@ -50,9 +50,9 @@ public function create(Request $request) {
     ]);
 
     if ($insert) {
-        return redirect()->back()->with('success', 'Data inserted successfully');
+        return redirect( route('brands.show') )->with('success', 'Brand Data inserted successfully');
     } else {
-        return back()->with('fail', 'Data insertion failed');
+        return back()->with('fail', 'Data insert failed');
     }
 }
 
