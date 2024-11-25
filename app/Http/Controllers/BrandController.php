@@ -6,6 +6,7 @@ use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Flasher\Prime\FlasherInterface;
 
 class BrandController extends Controller
 {
@@ -16,7 +17,7 @@ public function index(){
 
    //show all data
 public function show(){
-    $brands = Brand::all();
+    $brands = Brand::orderBy('id', 'desc')->paginate(5);
     return Inertia::render('Brands/Index', [
         'brands' => $brands
     ]);
@@ -64,7 +65,7 @@ public function edit($id){
     ]);
 }
 
-public function update(Request $request){
+public function update(Request $request, FlasherInterface $flasher){
      //dd($request->all());
     $id = $request->id;
      $request->validate([
@@ -98,7 +99,12 @@ public function update(Request $request){
     ]);
 
     if ($update) {
-        return redirect( route('brands.show') )->with('success', 'Data updated successfully');
+        $flasher->addSuccess('Update Successfully.', [
+            'position' => 'top-center',
+            'timeout' => 3000,
+            ]
+        );
+        return redirect( route('brands.show') );
     } else {
         return back()->with('fail', 'Data update failed');
     }

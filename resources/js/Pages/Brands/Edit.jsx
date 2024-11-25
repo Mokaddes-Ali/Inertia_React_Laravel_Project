@@ -28,8 +28,9 @@ const Edit = ({ record }) => {
   };
 
   return (
+    <>
     <AuthenticatedLayout>
-      <div className="bg-white shadow-lg rounded-lg p-8 max-w-4xl mx-auto">
+      <div className="bg-white shadow-lg rounded-lg p-8 mt-8 max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <a href={route('brands.show')}>
             <button type="button" className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition duration-300">
@@ -96,6 +97,7 @@ const Edit = ({ record }) => {
       {/* ToastContainer to display toast messages */}
       <ToastContainer />
     </AuthenticatedLayout>
+    </>
   );
 };
 
