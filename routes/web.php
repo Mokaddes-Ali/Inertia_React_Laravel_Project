@@ -85,7 +85,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/productlist', [ProductController::class, 'ProductList']);
 
 
-Route::get('/sales/add', [InvoiceController::class, 'saleIndex'])->name('sell.index');
+Route::get('/sales/add', [InvoiceController::class, 'saleIndex']);
+Route::post('/invoices', [InvoiceController::class, 'submitInvoice'])->name('submitInvoice');
 
 
 
