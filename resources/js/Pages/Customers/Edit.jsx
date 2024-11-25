@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useForm } from "@inertiajs/inertia-react";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 const Edit = ({ record }) => {
     const { data, setData, post, errors } = useForm({
@@ -17,6 +18,8 @@ const Edit = ({ record }) => {
     };
 
     return (
+        <>
+        <AuthenticatedLayout>
         <div className="bg-white shadow-md rounded-lg p-6">
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
@@ -138,6 +141,8 @@ const Edit = ({ record }) => {
                 </form>
             </div>
         </div>
+        </AuthenticatedLayout>
+        </>
     );
 };
 

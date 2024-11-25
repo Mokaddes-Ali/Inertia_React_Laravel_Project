@@ -53,15 +53,13 @@ class CustomerController extends Controller
         ]);
 
         if ($insert) {
-            $flasher->addSuccess('Data Inserted Successfully.', [
+            $flasher->addSuccess('Data inserted successfully.', [
                 'position' => 'top-center',
                 'timeout' => 3000,
-                ]
-            );
-            return redirect()->back();
-
+            ]);
+            return redirect()->route('customer.show');
         } else {
-            return back()->with('fail', 'Data insertion failed');
+            return back()->with('fail', 'Data insert failed');
         }
     }
 

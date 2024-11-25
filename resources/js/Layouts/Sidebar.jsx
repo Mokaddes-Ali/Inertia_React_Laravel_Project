@@ -5,6 +5,8 @@ import {faTachometerAlt,faChevronDown,faChevronUp,faCog,faPlus,faList,
     faSlidersH,faUserCircle,faUsers,faDatabase,faTags,faBoxesStacked,faCartShopping, faFileInvoiceDollar
 } from '@fortawesome/free-solid-svg-icons';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import NavLink from "@/Components/NavLink";
+
 
 export default function Sidebar() {
     const [activeDropdown, setActiveDropdown] = useState(null);
@@ -282,7 +284,11 @@ export default function Sidebar() {
                     </button>
                     {activeDropdown === 6 && (
                         <div className="ml-4 mt-2 space-y-2">
-                            <Link
+
+
+
+
+                             <NavLink
                                 href="/sales/add"
                                 className={`block py-2 px-3 rounded ${
                                     url.startsWith("/sales/add")
@@ -291,8 +297,8 @@ export default function Sidebar() {
                                 }`}
                             >
                                 <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Sales
-                            </Link>
-                            <Link
+                            </NavLink>
+                            <NavLink
                                 href="/sales/show"
                                 className={`block py-2 px-3 rounded ${
                                     url.startsWith("/sales/show")
@@ -301,7 +307,7 @@ export default function Sidebar() {
                                 }`}
                             >
                              <FontAwesomeIcon icon={faList} className="mr-2" /> All Sales
-                            </Link>
+                             </NavLink>
                         </div>
                     )}
                 </div>
