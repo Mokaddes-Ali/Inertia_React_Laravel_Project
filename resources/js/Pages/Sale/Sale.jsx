@@ -568,13 +568,37 @@ const Sale = ({ customers, products }) => {
                         {/* Cart Section */}
                         <div className="cart-summary bg-white p-4 rounded shadow-md w-1/3">
                             <h2 className="text-xl mb-4">Cart</h2>
-                            <div id="cart-customer">
-                                {selectedCustomer ? (
-                                    <p className="text-green-500">Selected Customer: {selectedCustomer.name}</p>
-                                ) : (
-                                    <p className="text-red-500">No customer selected for this cart.</p>
-                                )}
-                            </div>
+                            {/* <div id="cart-customer">
+                       {selectedCustomer ? (
+                           <p className="text-green-500">Selected Customer: {selectedCustomer.name} <br/>  Customer Address: {selectedCustomer.address}                           <br/> Customer Mobile: {selectedCustomer.number} <br/>  (ID: {selectedCustomer.id})</p>
+                       ) : (
+                          <p className="text-red-500">No customer selected for this cart.</p>
+                      )}
+                    </div> */}
+
+<div id="cart-customer">
+  {selectedCustomer ? (
+    <div>
+      <p className="text-green-500">
+        Selected Customer: {selectedCustomer.name} <br />
+        Customer Address: {selectedCustomer.address} <br />
+        Customer Mobile: {selectedCustomer.number} <br />
+        (ID: {selectedCustomer.id})
+      </p>
+      {/* Image from public folder */}
+      <p>Customer Image:<img
+        src={`/images/${selectedCustomer.pic}`} // Image path from database
+        alt={`${selectedCustomer.name}'s avatar`}
+        className="w-16 h-16 rounded-full mt-2"
+      />
+      </p>
+
+    </div>
+  ) : (
+    <p className="text-red-500">No customer selected for this cart.</p>
+  )}
+</div>
+
                             <div id="cart-items">
                                 {cart.map(item => (
                                     <div key={item.name} className="cart-item flex justify-between items-center mb-2 p-2 bg-gray-100 rounded shadow">
