@@ -17,12 +17,17 @@ class InvoiceController extends Controller
   public function index()
     {
         $invoices = Invoice::orderBy('id', 'desc')->with('products', 'customer')->get();
-        return view('admin.sale.index', compact('invoices'));
+        return Inertia::render('Sale/InvoiceList', [
+            'invoices' => $invoices,
+        ]);
     }
 
     public function salelist($id){
         $invoice = Invoice::with(['products', 'customer']) ->where('id',$id)->first();
-        return view('admin.sale.invoice',compact('invoice'));
+        return Inertia::render('Sale/SaleList', [
+            'invoice' => $invoice,
+        ]);
+
     }
 
     public function pdf($id)

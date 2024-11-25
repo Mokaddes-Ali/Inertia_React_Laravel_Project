@@ -86,6 +86,7 @@ Route::get('/productlist', [ProductController::class, 'ProductList']);
 
 
 Route::get('/sales/add', [InvoiceController::class, 'saleIndex']);
+Route::get('/sales/show', [InvoiceController::class, 'index'])->name('sales.index');
 Route::post('/invoices', [InvoiceController::class, 'submitInvoice'])->name('submitInvoice');
 
 
