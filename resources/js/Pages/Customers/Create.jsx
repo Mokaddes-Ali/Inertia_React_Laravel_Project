@@ -63,7 +63,7 @@ const Create = () => {
                 <div className="bg-primary text-white flex justify-between items-center py-3 px-6 rounded-t-lg">
                     <h5 className="text-lg font-semibold">Add Customer</h5>
                     <a
-                        href="/customer/show"
+                        href="/customers/show"
                         className="relative flex items-center px-4 py-2 border border-black bg-fuchsia-200 text-sm text-black hover:shadow-md transition duration-200 rounded-full transform hover:scale-105"
                     >
                         <span>View Customers</span>

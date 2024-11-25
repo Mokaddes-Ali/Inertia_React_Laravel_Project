@@ -8,18 +8,16 @@ const Index = ({ all }) => {
             <div className=" mt-10 rounded-lg">
                 {/* Header Section */}
                 <div className="flex items-center mb-4">
-                    <div className="mx-5 mt-2">
-                        <Link href="/customer">
-                            <button
-                                type="button"
-                                className="btn btn-success text-red-500 bg-gray-200 py-2 px-4 rounded-lg"
-                            >
-                                Add Customer
-                            </button>
-                        </Link>
-                    </div>
-                    <div className="mx-5 mt-2 ml-52 text-xl font-semibold">
+
+                    <div className="mx-5 mt-2 ml-80 text-xl font-semibold">
                         List of Customer
+                    </div>
+                    <div className="ml-96 mt-2">
+                        <Link href="/customers/add">
+                        <button className="px-6 py-2 rounded-md bg-teal-500 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500">
+        Add Customer
+      </button>
+                        </Link>
                     </div>
                 </div>
 
@@ -92,18 +90,18 @@ const Index = ({ all }) => {
                 </div>
 
                 {/* Pagination */}
-                <div className="mt-4">
+                <div className=" ml-80 mt-6">
                     {all.links.map((link, index) => (
-                        <a
+                        <Link
                             key={index}
                             href={link.url}
                             className={`px-4 py-2 mx-1 rounded-lg ${
                                 link.active
-                                    ? "bg-primary text-white"
+                                    ? "bg-white text-red-500"
                                     : "bg-gray-200 text-gray-700"
                             }`}
                             dangerouslySetInnerHTML={{ __html: link.label }}
-                        ></a>
+                        ></Link>
                     ))}
                 </div>
             </div>

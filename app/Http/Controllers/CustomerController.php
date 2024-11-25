@@ -18,7 +18,7 @@ class CustomerController extends Controller
     // Show all customers
 
     public function show(){
-        $all = Customer::orderBy('id', 'desc')->paginate(3);
+        $all = Customer::orderBy('id', 'desc')->paginate(6);
         return Inertia::render('Customers/Index', [
             'all' => $all
         ]);
