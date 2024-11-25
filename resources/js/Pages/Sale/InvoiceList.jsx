@@ -64,7 +64,7 @@ const InvoiceList = ({ invoices, canSaleCreate, canSaleDelete }) => {
                                         >
                                             <strong>{index + 1}.</strong>{" "}
                                             <span className="font-semibold">
-                                                {product.product?.name ?? "Product not found"}
+                                                {product.name ?? "Product not found"}
                                             </span>
                                             <br />
                                             <span>Quantity: {product.qty}</span>{" "}
