@@ -157,6 +157,8 @@ class ProductController extends Controller
 }
 
 
+
+
 // Show product details
 public function destroy($id)
 {

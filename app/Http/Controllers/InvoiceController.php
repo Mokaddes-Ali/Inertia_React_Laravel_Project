@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\InvoicesExport;
+use Inertia\Inertia;
 use App\Models\Invoice;
+use App\Models\Product;
+use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Exports\InvoicesExport;
 use App\Models\Invoice_Product;
-use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceController extends Controller
@@ -34,7 +37,13 @@ class InvoiceController extends Controller
 
     public function saleIndex()
     {
-        return view('admin.sale.sale');
+        $customers = Customer::all();
+        $products = Product::all();
+        return Inertia::render('Invoices/Create', [
+            'customers' => $customers,
+            'products' => $products,
+        ]);
+
     }
 
 

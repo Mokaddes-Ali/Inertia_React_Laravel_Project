@@ -74,13 +74,15 @@ class CustomerController extends Controller
     }
 
 
-  // paginated customer list
-public function customerList()
+    public function customerList()
 {
     $customers = Customer::get();
 
     return response()->json( $customers);
 }
+
+
+
 
 public function dataShow($id)
 {

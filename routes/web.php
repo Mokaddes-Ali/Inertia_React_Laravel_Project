@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
@@ -44,6 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/customer/update', [CustomerController::class, 'update']);
     Route::get('/delete/{id}', [CustomerController::class, 'destroy']);
 
+    Route::get('/customerlist', [CustomerController::class, 'customerList']);
+
 });
 
 
@@ -74,10 +77,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
     Route::get('/products/edit/{id}', [ProductController::class, 'edit']);
-    // Route::put('/products/update/{id}', [ProductController::class, 'update'])->name('products.update');
-    Route::post('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::post('/products/update/{id}', [ProductController::class, 'update'])->name('products.update');
 
     Route::delete('/products/delete/{id}', [ProductController::class, 'destroy']);
+
+    //for product list in use invoice
+Route::get('/productlist', [ProductController::class, 'ProductList']);
+
+
+Route::get('/sales/add', [InvoiceController::class, 'saleIndex'])->name('sell.index');
 
 
 
