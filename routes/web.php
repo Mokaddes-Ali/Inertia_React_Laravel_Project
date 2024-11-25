@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -88,6 +89,8 @@ Route::get('/productlist', [ProductController::class, 'ProductList']);
 Route::get('/sales/add', [InvoiceController::class, 'saleIndex']);
 Route::get('/sales/show', [InvoiceController::class, 'index'])->name('sales.index');
 Route::post('/invoices', [InvoiceController::class, 'submitInvoice'])->name('submitInvoice');
+
+Route::get('/backup', [BackupController::class, 'createBackup'])->name('backup.create');
 
 
 

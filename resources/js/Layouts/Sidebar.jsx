@@ -309,9 +309,9 @@ export default function Sidebar() {
                   {/* Database Link */}
                   <div className="px-4 py-2">
                     <Link
-                        href="/database"
+                        href="/backup"
                         className={`block py-2 px-3 rounded ${
-                            url.startsWith("/database")
+                            url.startsWith("/backup")
                                 ? "bg-gray-700 text-orange-500"
                                 : "hover:bg-gray-700"
                         }`}
