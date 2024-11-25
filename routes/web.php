@@ -34,17 +34,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/customers/add', [CustomerController::class, 'add'])->name('index');
-    Route::post('/customer/submit', [CustomerController::class, 'create'])->name('create');
-    Route::get('/customers/show', [CustomerController::class, 'index']) -> name('customer.show');
-    Route::get('/customer/edit/{id}', [CustomerController::class, 'edit']);
-    // Route::post('/customer/update', [CustomerController::class, 'update']);
-    Route::get('/delete/{id}', [CustomerController::class, 'destroy']);
 
-Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
-Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
-Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/customers/add', [CustomerController::class, 'index'])->name('index');
+    Route::post('/customer/submit', [CustomerController::class, 'create'])->name('create');
+    Route::get('/customers/show', [CustomerController::class, 'show']) -> name('customer.show');
+    Route::get('/customer/edit/{id}', [CustomerController::class, 'edit']);
+    Route::post('/customer/update', [CustomerController::class, 'update']);
+    Route::get('/delete/{id}', [CustomerController::class, 'destroy']);
 
 });
 
@@ -77,7 +75,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
     Route::get('/products/edit/{id}', [ProductController::class, 'edit']);
     // Route::put('/products/update/{id}', [ProductController::class, 'update'])->name('products.update');
-    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::post('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 
     Route::delete('/products/delete/{id}', [ProductController::class, 'destroy']);
 

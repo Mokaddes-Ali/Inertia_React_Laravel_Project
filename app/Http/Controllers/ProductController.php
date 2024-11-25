@@ -107,82 +107,53 @@ class ProductController extends Controller
     }
 
     // Update product data
-
-//     public function update(Request $request, Product $product)
-//     {
-//     $request->validate([
-//         'name' => 'required|max:100',
-//         'category_id' => 'required|exists:categories,id',
-//         'brand_id' => 'required|exists:brands,id',
-//         'price' => 'required|numeric',
-//         'cost' => 'required|numeric',
-//         'code' => 'required',
-//         'unit' => 'required|numeric|min:1',
-//         'details' => 'nullable',
-//         'img_url' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
-//     ]);
-//     $product = Product::find($id);
-
-//     if (!$product) {
-//         return back()->with('fail', 'Product not found.');
-//     }
-//     $image_rename = $product->img_url;
-//     if ($request->hasFile('img_url')) {
-//         if ($product->img_url && file_exists(public_path('productImage/' . $product->img_url))) {
-//             unlink(public_path('productImage/' . $product->img_url));
-//         }
-
-//         $image = $request->file('img_url');
-//         $ext = $image->getClientOriginalExtension();
-//         $image_rename = time() . '_' . rand(100000, 10000000) . '.' . $ext;
-//         $image->move(public_path('productImage'), $image_rename);
-//     }
-//     $product->update([
-//         'name' => $request['name'],
-//         'category_id' => $request['category_id'],
-//         'brand_id' => $request['brand_id'],
-//         'price' => $request['price'],
-//         'cost' => $request['cost'],
-//         'code' => $request['code'],
-//         'unit' => $request['unit'],
-//         'details' => $request['details'],
-//         'img_url' => $image_rename,
-//         'status' => $request['status'],
-//     ]);
-
-//     if ($product) {
-//         return redirect()->back()->with('success', 'Product updated successfully.');
-//     } else {
-//         return back()->with('fail', 'Failed to update product.');
-//     }
-// }
-
-
-public function update(Request $request, Product $product)
-{
-    $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
+    public function update(Request $request, $id)
+    {
+    $request->validate([
+        'name' => 'required|max:100',
         'category_id' => 'required|exists:categories,id',
         'brand_id' => 'required|exists:brands,id',
         'price' => 'required|numeric',
         'cost' => 'required|numeric',
-        'code' => 'required|string|max:255',
-        'unit' => 'required|string|max:255',
-        'status' => 'required|boolean',
-        'img_url' => 'nullable|image|max:2048',
-        'details' => 'nullable|string',
+        'code' => 'required',
+        'unit' => 'required|numeric|min:1',
+        'details' => 'nullable',
+        'img_url' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
+    ]);
+    $product = Product::find($id);
+
+    if (!$product) {
+        return back()->with('fail', 'Product not found.');
+    }
+    $image_rename = $product->img_url;
+    if ($request->hasFile('img_url')) {
+        if ($product->img_url && file_exists(public_path('productImage/' . $product->img_url))) {
+            unlink(public_path('productImage/' . $product->img_url));
+        }
+
+        $image = $request->file('img_url');
+        $ext = $image->getClientOriginalExtension();
+        $image_rename = time() . '_' . rand(100000, 10000000) . '.' . $ext;
+        $image->move(public_path('productImage'), $image_rename);
+    }
+    $product->update([
+        'name' => $request['name'],
+        'category_id' => $request['category_id'],
+        'brand_id' => $request['brand_id'],
+        'price' => $request['price'],
+        'cost' => $request['cost'],
+        'code' => $request['code'],
+        'unit' => $request['unit'],
+        'details' => $request['details'],
+        'img_url' => $image_rename,
+        'status' => $request['status'],
     ]);
 
-    // Update the product with the validated data
-    $product->update($validatedData);
-
-    // Handle image upload if any
-    if ($request->hasFile('img_url')) {
-        $product->img_url = $request->file('img_url')->store('productImage', 'public');
-        $product->save();
+    if ($product) {
+        return redirect()->back()->with('success', 'Product updated successfully.');
+    } else {
+        return back()->with('fail', 'Failed to update product.');
     }
-
-    return redirect()->route('products.index')->with('success', 'Product updated successfully!');
 }
 
 

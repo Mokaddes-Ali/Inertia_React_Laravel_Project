@@ -1,112 +1,144 @@
+import React from "react";
+import { Link, useForm } from "@inertiajs/inertia-react";
 
-
-import React, { useState } from 'react';
-import { Inertia } from '@inertiajs/inertia';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-
-const Edit = ({ customer }) => {
-    const [values, setValues] = useState({
-        name: customer.name,
-        email: customer.email,
-        number: customer.number || '',
-        address: customer.address || '',
-        status: customer.status,
-        pic: null, // ইমেজ ফাইলের জন্য
+const Edit = ({ record }) => {
+    const { data, setData, post, errors } = useForm({
+        id: record.id,
+        name: record.name || "",
+        email: record.email || "",
+        number: record.number || "",
+        address: record.address || "",
+        pic: null,
     });
-
-    const handleChange = (e) => {
-        const { name, value, files } = e.target;
-        if (name === "pic") {
-            setValues({ ...values, pic: files[0] }); // ফাইল ইনপুট হ্যান্ডেল করা
-        } else {
-            setValues({ ...values, [name]: value });
-        }
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        const formData = new FormData();
-        formData.append("name", values.name);
-        formData.append("email", values.email);
-        formData.append("number", values.number);
-        formData.append("address", values.address);
-        formData.append("status", values.status);
-        if (values.pic) {
-            formData.append("pic", values.pic); // ফাইল আপলোড করা
-        }
-
-        Inertia.put(`/customers/${customer.id}`, formData, {
-            onSuccess: () => alert('Customer updated successfully!'),
-            onError: (errors) => console.log(errors),
-        });
+        post("/customer/update");
     };
 
     return (
-        <AuthenticatedLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Edit Customer</h2>}>
-            <div className="container mx-auto px-4 py-6">
-                <h1 className="text-2xl font-bold mb-4">Edit Customer</h1>
-                <form onSubmit={handleSubmit} method="post" className="space-y-4">
+        <div className="bg-white shadow-md rounded-lg p-6">
+            {/* Header */}
+            <div className="flex justify-between items-center mb-6">
+                <div>
+                    <Link href="/customer/show">
+                        <button className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600">
+                            Back To List
+                        </button>
+                    </Link>
+                </div>
+                <h3 className="text-xl font-bold">Customer Edit</h3>
+            </div>
 
-                    <input
-                        type="text"
-                        name="name"
-                        value={values.name}
-                        onChange={handleChange}
-                        placeholder="Name"
-                        className="w-full border px-4 py-2"
-                    />
-                    <input
-                        type="email"
-                        name="email"
-                        value={values.email}
-                        onChange={handleChange}
-                        placeholder="Email"
-                        className="w-full border px-4 py-2"
-                    />
-                    <input
-                        type="text"
-                        name="number"
-                        value={values.number}
-                        onChange={handleChange}
-                        placeholder="Number"
-                        className="w-full border px-4 py-2"
-                    />
-                    <input
-                        type="text"
-                        name="address"
-                        value={values.address}
-                        onChange={handleChange}
-                        placeholder="Address"
-                        className="w-full border px-4 py-2"
-                    />
+            {/* Form */}
+            <div>
+                <form onSubmit={handleSubmit} encType="multipart/form-data">
+                    {/* Name Input */}
+                    <div className="mb-4">
+                        <label htmlFor="name" className="block text-sm font-medium mb-2">
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={data.name}
+                            onChange={(e) => setData("name", e.target.value)}
+                            placeholder="Enter Name"
+                            required
+                            className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        />
+                        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+                    </div>
 
-                    {/* ইমেজ ফাইল ইনপুট */}
-                    <input
-                        type="file"
-                        name="pic"
-                        onChange={handleChange}
-                        className="w-full border px-4 py-2"
-                    />
-                    {customer.pic && (
-                        <div>
-                            <p>Existing Image:</p>
-                            <img
-                                src={`/images/${customer.pic}`}
-                                alt={customer.name}
-                                className="w-24 h-24 object-cover rounded"
-                            />
-                        </div>
-                    )}
+                    {/* Email Input */}
+                    <div className="mb-4">
+                        <label htmlFor="email" className="block text-sm font-medium mb-2">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={data.email}
+                            onChange={(e) => setData("email", e.target.value)}
+                            placeholder="Enter Email"
+                            required
+                            className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        />
+                        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                    </div>
 
-                    <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
+                    {/* Mobile Number Input */}
+                    <div className="mb-4">
+                        <label htmlFor="number" className="block text-sm font-medium mb-2">
+                            Mobile
+                        </label>
+                        <input
+                            type="number"
+                            id="number"
+                            name="number"
+                            value={data.number}
+                            onChange={(e) => setData("number", e.target.value)}
+                            placeholder="Enter Mobile Number"
+                            required
+                            className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        />
+                        {errors.number && <p className="text-red-500 text-sm">{errors.number}</p>}
+                    </div>
+
+                    {/* Address Input */}
+                    <div className="mb-4">
+                        <label htmlFor="address" className="block text-sm font-medium mb-2">
+                            Address
+                        </label>
+                        <input
+                            type="text"
+                            id="address"
+                            name="address"
+                            value={data.address}
+                            onChange={(e) => setData("address", e.target.value)}
+                            placeholder="Enter Address"
+                            required
+                            className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        />
+                        {errors.address && <p className="text-red-500 text-sm">{errors.address}</p>}
+                    </div>
+
+                    {/* Image Input */}
+                    <div className="mb-4">
+                        <label htmlFor="pic" className="block text-sm font-medium mb-2">
+                            Image
+                        </label>
+                        <input
+                            type="file"
+                            id="pic"
+                            name="pic"
+                            onChange={(e) => setData("pic", e.target.files[0])}
+                            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
+                        />
+                        {record.pic && (
+                            <div className="mt-2">
+                                <img
+                                    src={`/images/${record.pic}`}
+                                    alt="Customer"
+                                    className="w-20 h-20 rounded-md object-cover"
+                                />
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Submit Button */}
+                    <button
+                        type="submit"
+                        className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600"
+                    >
                         Update
                     </button>
                 </form>
             </div>
-        </AuthenticatedLayout>
+        </div>
     );
 };
 
 export default Edit;
-
