@@ -92,12 +92,14 @@ public function update(Request $request, FlasherInterface $flasher){
             $image_rename=$oldimg['brandImg'];
         }
 
+
     $update = Brand::where('id',$id)->update([
         'brandName' => $request->brandName,
         'brandImg' => $image_rename,
         'editor' => Auth::user()->id,
     ]);
 
+    
     if ($update) {
         $flasher->addSuccess('Update Successfully.', [
             'position' => 'top-center',
