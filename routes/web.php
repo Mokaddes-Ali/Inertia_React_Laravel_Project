@@ -60,13 +60,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/category/update', [CategoryController::class, 'update'])->name('category.update');
     Route::get('/delete/category/{id}', [CategoryController::class, 'destroy']);
 
-
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/brands/add', [BrandController::class, 'index'])->name('index');
     Route::post('/brands/submit', [BrandController::class, 'create'])->name('create');
-    Route::get('/brands/show', [BrandController::class, 'show']) -> name('brands.show');
+    Route::get('/brands/show', [BrandController::class, 'show']) ->name('brands.show');
     Route::get('/brands/edit/{id}', [BrandController::class, 'edit']);
     Route::post('/brands/update', [BrandController::class, 'update'])->name('brands.update');
     Route::delete('/delete/{id}', [BrandController::class, 'destroy']);
@@ -74,11 +73,12 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/products/show', [ProductController::class, 'index']);
+    Route::get('/products/show', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
     Route::get('/products/edit/{id}', [ProductController::class, 'edit']);
-    Route::post('/products/update/{id}', [ProductController::class, 'update'])->name('products.update');
+    // Route::post('/products/update/{id}', [ProductController::class, 'update'])->name('products.update');
+    Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
 
     Route::delete('/products/delete/{id}', [ProductController::class, 'destroy']);
 

@@ -110,13 +110,13 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
     $request->validate([
-        'name' => 'required|max:100',
+        'name' => 'nullable|max:100',
         'category_id' => 'required|exists:categories,id',
-        'brand_id' => 'required|exists:brands,id',
-        'price' => 'required|numeric',
-        'cost' => 'required|numeric',
-        'code' => 'required',
-        'unit' => 'required|numeric|min:1',
+        'brand_id' => 'nullable|exists:brands,id',
+        'price' => 'nullable|numeric',
+        'cost' => 'nullable|numeric',
+        'code' => 'nullable',
+        'unit' => 'nullable|numeric|min:1',
         'details' => 'nullable',
         'img_url' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
     ]);
@@ -155,6 +155,7 @@ class ProductController extends Controller
         return back()->with('fail', 'Failed to update product.');
     }
 }
+
 
 
 
