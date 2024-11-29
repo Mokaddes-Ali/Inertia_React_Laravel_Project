@@ -73,6 +73,7 @@ const InvoiceList = ({ invoices, canSaleCreate, canSaleDelete }) => {
                                     ))}
                                 </ul>
                             </td>
+
                             <td className="border p-2">{invoice.vat}</td>
                             <td className="border p-2">{invoice.payable}</td>
                             <td className="border p-2">{invoice.paid}</td>
