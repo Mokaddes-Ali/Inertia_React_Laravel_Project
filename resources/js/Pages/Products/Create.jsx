@@ -18,7 +18,20 @@ const Create = ({ categories, brands }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    post("/products/store"); // Your route here
+
+    post('/products/store', data, {
+      onSuccess: (response) => {
+        // Show success message after the product is added successfully
+        alert('Product added successfully!');
+
+        // Optionally redirect to the product list page
+        // window.location.href = '/products';
+      },
+      onError: (errors) => {
+        // Handle any errors
+        alert('There was an error adding the product.');
+      },
+    });
   };
 
   return (
