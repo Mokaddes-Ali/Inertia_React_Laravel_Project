@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\DB;
 class InvoiceController extends Controller
 {
 
+
+  
   public function index()
     {
-        $invoices = Invoice::orderBy('id', 'desc')->with('products', 'customer')->get();
+        $invoices = Invoice::orderBy('id', 'desc')->with('products.product', 'customer')->get();
         return Inertia::render('Sale/InvoiceList', [
             'invoices' => $invoices,
         ]);

@@ -55,20 +55,18 @@ const InvoiceList = ({ invoices, canSaleCreate, canSaleDelete }) => {
                         <tr key={invoice.id} className="hover:bg-gray-100">
                             <td className="border p-2">{invoice.id}</td>
                             <td className="border p-2">{invoice.customer.name}</td>
-                            <td className="border p-2">
-                                <ul className="list-none m-0 p-0">
+                            <td className="border px-4 py-2">
+                                <ul className="list-none p-0">
                                     {invoice.products.map((product, index) => (
                                         <li
                                             key={index}
-                                            className="mb-2 pb-2 border-b border-gray-300"
+                                            className="mb-2 border-b pb-2"
                                         >
                                             <strong>{index + 1}.</strong>{" "}
-                                            <span className="font-semibold">
-                                                {product.name ?? "Product not found"}
-                                            </span>
+                                            {product.product?.name || "Product not found"}
                                             <br />
-                                            <span>Quantity: {product.qty}</span>{" "}
-                                            | <span>Price: ${product.sale_price}</span>
+                                            <span>Quantity: {product.qty}</span> |{" "}
+                                            <span>Price: ${product.sale_price}</span>
                                         </li>
                                     ))}
                                 </ul>
