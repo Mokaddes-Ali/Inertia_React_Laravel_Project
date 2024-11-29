@@ -110,8 +110,8 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
     $request->validate([
-        'name' => 'nullable|max:100',
-        'category_id' => 'required|exists:categories,id',
+        'name' => 'required|max:100',
+        'category_id' => 'nullable|exists:categories,id',
         'brand_id' => 'nullable|exists:brands,id',
         'price' => 'nullable|numeric',
         'cost' => 'nullable|numeric',
@@ -138,7 +138,7 @@ class ProductController extends Controller
     }
     $product->update([
         'name' => $request['name'],
-        'category_id' => $request['category_id'],
+        'category_id' => $request['category_id'] ?? null,
         'brand_id' => $request['brand_id'],
         'price' => $request['price'],
         'cost' => $request['cost'],
@@ -149,11 +149,12 @@ class ProductController extends Controller
         'status' => $request['status'],
     ]);
 
-    if ($product) {
+    if ($product->wasChanged()) {
         return redirect()->back()->with('success', 'Product updated successfully.');
     } else {
-        return back()->with('fail', 'Failed to update product.');
+        return back()->with('fail', 'No changes were made.');
     }
+
 }
 
 
