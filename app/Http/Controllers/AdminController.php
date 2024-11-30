@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Brand;
 use App\Models\Invoice;
 use App\Models\Product;
@@ -13,22 +14,24 @@ class AdminController extends Controller
 {
     public function index()
     {
-
-        $invoices = Invoice::all();
-        $products = Product::all();
-        $categories = Category::all();
-        $brands = Brand::all();
-        $customers = Customer::all();
+        $invoices = Invoice::count();
+        $products = Product::count();
+        $categories = Category::count();
+        $brands = Brand::count();
+        $customers = Customer::count();
         $totalPaidAmount = Invoice::sum('paid');
         $totalDueAmount = Invoice::sum('due');
         $totalVat = Invoice::sum('vat');
-        // $totalDiscount = Invoice::sum('discount');
-        // $totalIncome = Invoice::sum('total');
 
-        return view('admin.dashboard.index',
-         compact('invoices', 'products', 'categories',
-         'brands', 'customers','totalPaidAmount',
-        'totalDueAmount', 'totalVat'));
+        return Inertia::render('Dashboard', [
+            'invoices' => $invoices,
+            'products' => $products,
+            'categories' => $categories,
+            'brands' => $brands,
+            'customers' => $customers,
+            'totalPaidAmount' => $totalPaidAmount,
+            'totalDueAmount' => $totalDueAmount,
+            'totalVat' => $totalVat,
+        ]);
     }
-
 }

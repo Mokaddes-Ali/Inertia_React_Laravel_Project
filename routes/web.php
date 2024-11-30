@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BackupController;
 use App\Http\Controllers\InvoiceController;
@@ -21,9 +22,7 @@ Route::middleware(['guest'])->group(function () {
 Route::get('/posts/add', [PostController::class, 'create'])->name('posts.add');
 
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/products/add', [ProfileController::class, 'add'])->name('post.add');
