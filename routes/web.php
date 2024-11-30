@@ -90,7 +90,8 @@ Route::get('/sales/add', [InvoiceController::class, 'saleIndex']);
 Route::get('/sales/show', [InvoiceController::class, 'index'])->name('sales.index');
 Route::post('/invoices', [InvoiceController::class, 'submitInvoice'])->name('submitInvoice');
 
-Route::get('/backup', [BackupController::class, 'createBackup'])->name('backup.create');
+// Route::get('/backup', [BackupController::class, 'createBackup'])->name('backup.create');
+Route::get('/backup/download', [BackupController::class, 'createBackup'])->name('backup.download');
 
 
 

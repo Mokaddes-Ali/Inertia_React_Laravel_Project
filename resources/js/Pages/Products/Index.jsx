@@ -5,6 +5,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 const Index = () => {
     const { products } = usePage().props;
 
+
+
     return (
         <>
         <AuthenticatedLayout>
@@ -40,6 +42,7 @@ const Index = () => {
                                         <th className="border p-2">Code</th>
                                         <th className="border p-2">Units</th>
                                         <th className="border p-2">Status</th>
+                                        <th className="border p-2">Action</th>
                                         <th className="border p-2">Action</th>
                                     </tr>
                                 </thead>
@@ -135,6 +138,7 @@ const Index = () => {
                                                     </button>
                                                 </form>
                                             </td>
+                                           
                                         </tr>
                                     ))}
                                 </tbody>

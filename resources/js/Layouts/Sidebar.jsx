@@ -6,6 +6,7 @@ import {faTachometerAlt,faChevronDown,faChevronUp,faCog,faPlus,faList,
 } from '@fortawesome/free-solid-svg-icons';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import NavLink from "@/Components/NavLink";
+import BackupDownload from "@/Pages/DatabaseBackup/BackupDownload";
 
 
 export default function Sidebar() {
@@ -43,7 +44,7 @@ export default function Sidebar() {
             <nav className="mt-4">
                 {/* Dashboard Link */}
                 <div className="px-4 py-2">
-                    <Link
+                    <NavLink
                         href="/dashboard"
                         className={`block py-2 px-3 rounded ${
                             url.startsWith("/dashboard")
@@ -52,7 +53,7 @@ export default function Sidebar() {
                         }`}
                     >
                         <FontAwesomeIcon icon={faTachometerAlt} className="mr-2" /> Dashboard
-                    </Link>
+                    </NavLink>
                 </div>
 
 
@@ -74,7 +75,7 @@ export default function Sidebar() {
                     </button>
                     {activeDropdown === 2 && (
                         <div className="ml-4 mt-2 space-y-2">
-                            <Link
+                            <NavLink
                                 href="/settings/general"
                                 className={`block py-2 px-3 rounded ${
                                     url.startsWith("/settings/general")
@@ -83,8 +84,8 @@ export default function Sidebar() {
                                 }`}
                             >
                                 <FontAwesomeIcon icon={faSlidersH} className="mr-2" /> General
-                            </Link>
-                            <Link
+                            </NavLink>
+                            <NavLink
                                 href="/settings/account"
                                 className={`block py-2 px-3 rounded ${
                                     url.startsWith("/settings/account")
@@ -93,7 +94,7 @@ export default function Sidebar() {
                                 }`}
                             >
                                 <FontAwesomeIcon icon={faUserCircle} className="mr-2" /> Account
-                            </Link>
+                            </NavLink>
                         </div>
                     )}
                 </div>
@@ -116,7 +117,7 @@ export default function Sidebar() {
     </button>
     {activeDropdown === 3 && (
         <div className="ml-4 mt-2 space-y-2">
-            <Link
+            <NavLink
                 href="/customers/add"
                 className={`block py-2 px-3 rounded ${
                     url.startsWith("/customers/add")
@@ -125,8 +126,8 @@ export default function Sidebar() {
                 }`}
             >
                 <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Customer
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
                 href="/customers/show"
                 className={`block py-2 px-3 rounded ${
                     url.startsWith("/customers/show")
@@ -135,7 +136,7 @@ export default function Sidebar() {
                 }`}
             >
                 <FontAwesomeIcon icon={faList} className="mr-2" /> All Customers
-            </Link>
+            </NavLink>
         </div>
     )}
 </div>
@@ -158,7 +159,7 @@ export default function Sidebar() {
     </button>
     {activeDropdown === 4 && (
         <div className="ml-4 mt-2 space-y-2">
-            <Link
+            <NavLink
                 href="/brands/add"
                 className={`block py-2 px-3 rounded ${
                     url.startsWith("/brands/add")
@@ -167,8 +168,8 @@ export default function Sidebar() {
                 }`}
             >
                 <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Brand
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
                 href="/brands/show"
                 className={`block py-2 px-3 rounded ${
                     url.startsWith("/brands/show")
@@ -177,7 +178,7 @@ export default function Sidebar() {
                 }`}
             >
                 <FontAwesomeIcon icon={faList} className="mr-2" /> All Brands
-            </Link>
+            </NavLink>
         </div>
     )}
 </div>
@@ -200,7 +201,7 @@ export default function Sidebar() {
     </button>
     {activeDropdown === 5 && (
         <div className="ml-4 mt-2 space-y-2">
-            <Link
+            <NavLink
                 href="/categories/add"
                 className={`block py-2 px-3 rounded ${
                     url.startsWith("/categories/add")
@@ -209,8 +210,8 @@ export default function Sidebar() {
                 }`}
             >
                 <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Category
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
                 href="/categories/show"
                 className={`block py-2 px-3 rounded ${
                     url.startsWith("/categories/show")
@@ -219,7 +220,7 @@ export default function Sidebar() {
                 }`}
             >
                 <FontAwesomeIcon icon={faList} className="mr-2" /> All Categories
-            </Link>
+            </NavLink>
         </div>
     )}
 </div>
@@ -242,7 +243,7 @@ export default function Sidebar() {
     </button>
     {activeDropdown === 1 && (
         <div className="ml-4 mt-2 space-y-2">
-            <Link
+            <NavLink
                 href="/products/create"
                 className={`block py-2 px-3 rounded ${
                     url.startsWith("/products/create")
@@ -251,8 +252,8 @@ export default function Sidebar() {
                 }`}
             >
                 <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Product
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
                 href="/products/show"
                 className={`block py-2 px-3 rounded ${
                     url.startsWith("/products/show")
@@ -261,7 +262,7 @@ export default function Sidebar() {
                 }`}
             >
                 <FontAwesomeIcon icon={faList} className="mr-2" /> All Products
-            </Link>
+            </NavLink>
         </div>
     )}
 </div>
@@ -313,26 +314,19 @@ export default function Sidebar() {
                 </div>
 
                   {/* Database Link */}
-                  <div className="px-4 py-2">
-                    <Link
-                        href="/backup"
-                        className={`block py-2 px-3 rounded ${
-                            url.startsWith("/backup")
-                                ? "bg-gray-700 text-orange-500"
-                                : "hover:bg-gray-700"
-                        }`}
-                    >
-                        <FontAwesomeIcon icon={faDatabase} className="mr-2" /> Dashboard
-                    </Link>
+                  <div className="px-4 ml-3 py-2">
+                    <BackupDownload />
                 </div>
+                <div className="ml-7 mt-1">
 
-                <ResponsiveNavLink
+                <NavLink
     as="button"
     method="post"
     href={route('logout')}
 >
     Log Out
-</ResponsiveNavLink>
+</NavLink>
+</div>
 
 
             </nav>
