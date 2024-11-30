@@ -6,7 +6,7 @@ const InvoiceList = ({ invoices, canSaleCreate, canSaleDelete }) => {
     return (
         <>
         <AuthenticatedLayout>
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4 mt-8">
             <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                     {canSaleCreate && (

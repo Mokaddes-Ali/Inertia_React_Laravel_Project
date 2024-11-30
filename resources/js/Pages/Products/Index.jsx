@@ -10,12 +10,12 @@ const Index = () => {
     return (
         <>
         <AuthenticatedLayout>
-        <div className="container mx-auto mt-5">
+        <div className="container mx-auto mt-10">
             <div className="shadow-md bg-white rounded">
                 <div className="flex justify-between items-center bg-gray-100 p-4 border-b">
                     <Link
                         href="/products/create"
-                        className="btn btn-success text-white px-4 py-2 rounded"
+                        className="btn btn-success bg-slate-800 text-white px-4 py-2 rounded"
                     >
                         Add Product
                     </Link>
@@ -138,7 +138,7 @@ const Index = () => {
                                                     </button>
                                                 </form>
                                             </td>
-                                           
+
                                         </tr>
                                     ))}
                                 </tbody>

@@ -560,7 +560,7 @@ const Sale = ({ customers, products }) => {
     return (
         <>
             <AuthenticatedLayout>
-                <div className="container mx-auto p-4">
+                <div className="container mx-auto mt-10 p-4">
                     {/* Toast Container */}
                     <ToastContainer />
 

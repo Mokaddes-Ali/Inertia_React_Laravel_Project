@@ -17,7 +17,7 @@ const Edit = ({ category }) => {
   return (
     <>
     <AuthenticatedLayout>
-    <div className="container mx-auto mt-10">
+    <div className="container mx-auto mt-12">
       <h1 className="text-2xl font-semibold mb-6">Edit Category</h1>
       <div className="flex justify-start">
         <div className="w-full max-w-lg">

@@ -13,7 +13,7 @@ const Index = ({ categories }) => {
     return (
         <>
         <AuthenticatedLayout>
-        <div className="container mx-auto mt-5">
+        <div className="container mx-auto mt-10">
             <div className="flex flex-col">
                 <div className="w-full">
                     {/* Panel Header */}

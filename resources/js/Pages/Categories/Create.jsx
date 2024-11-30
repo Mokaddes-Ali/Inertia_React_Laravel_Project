@@ -16,7 +16,7 @@ const Create = () => {
   return (
     <>
     <AuthenticatedLayout>
-    <div className="container mx-auto mt-5">
+    <div className="container mx-auto mt-12">
       {/* Header Section */}
       <div className="flex justify-start items-center p-4 bg-gray-100 rounded-md shadow-md">
         <a href="/category/show">

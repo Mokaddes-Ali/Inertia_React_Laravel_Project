@@ -37,8 +37,8 @@ const Create = ({ categories, brands }) => {
   return (
     <>
     <AuthenticatedLayout>
-    <div className="container fixed mt-2">
-      <div className="shadow-sm max-w-4xl mx-auto">
+    <div className="  mt-10 ml-12">
+      <div className="shadow-sm max-w-7xl mx-auto">
         {/* Card Header */}
         <div className="bg-blue-500 text-white text-center py-2">
           <h3 className="text-lg font-bold">Add New Product</h3>
