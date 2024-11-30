@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BackupController;
@@ -93,9 +94,16 @@ Route::post('/invoices', [InvoiceController::class, 'submitInvoice'])->name('sub
 Route::get('/backup/download', [BackupController::class, 'createBackup'])->name('backup.download');
 
 
-
-
-
     });
+
+    Route::group(['middleware' => ['auth']], function() {
+        Route::get('/user', [UserController::class, 'create'])->name('user.create');
+        Route::get('/show', [UserController::class, 'index'])->name('user.index');
+        Route::resource('users', UserController::class)->except(['create', 'index']);
+        Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('users/{id}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+          });
 
 require __DIR__.'/auth.php';

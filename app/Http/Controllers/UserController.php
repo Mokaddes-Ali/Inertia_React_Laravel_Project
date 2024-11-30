@@ -11,14 +11,17 @@ use Hash;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
     public function index(Request $request): View
     {
-        $data = User::orderBy('id','asc')->paginate(5);
+        $data = User::orderBy('id','asc')->get();
 
-        return view('admin.users.index',compact('data'));
+        return Inertia::render('Users/Index', [
+            'users' => $data
+        ]);
     }
 
     public function create()
