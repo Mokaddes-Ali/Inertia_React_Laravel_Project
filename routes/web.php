@@ -97,8 +97,8 @@ Route::get('/backup/download', [BackupController::class, 'createBackup'])->name(
     });
 
     Route::group(['middleware' => ['auth']], function() {
-        Route::get('/user', [UserController::class, 'create'])->name('user.create');
-        Route::get('/show', [UserController::class, 'index'])->name('user.index');
+        Route::get('/user', [UserController::class, 'create'])->name('users.create');
+        Route::get('/show', [UserController::class, 'index'])->name('users.index');
         Route::resource('users', UserController::class)->except(['create', 'index']);
         Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
         Route::put('users/{id}', [UserController::class, 'update'])->name('users.update');

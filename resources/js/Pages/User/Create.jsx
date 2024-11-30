@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Inertia } from '@inertiajs/inertia';
+import { Link } from '@inertiajs/inertia-react';
 
 const Create = ({ roles, errors }) => {
     const [formData, setFormData] = useState({
@@ -41,9 +42,9 @@ const Create = ({ roles, errors }) => {
             <div className="max-w-4xl mx-auto">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-semibold text-gray-700">Add New User</h2>
-                    <InertiaLink href={route('users.index')} className="btn btn-outline-secondary btn-sm">
+                    <Link href={route('users.index')} className="btn btn-outline-secondary btn-sm">
                         <i className="fa fa-arrow-left"></i> Back
-                    </InertiaLink>
+                    </Link>
                 </div>
 
                 {/* Error Messages */}

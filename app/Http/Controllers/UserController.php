@@ -2,33 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
-use Illuminate\Support\Arr;
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
+use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\View\View;
+use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request)
     {
-        $data = User::orderBy('id','asc')->get();
+        // Fetch users with pagination if required
+        $data = User::select('id', 'name', 'email') // Fetch only necessary columns
+                    ->orderBy('id', 'asc')
+                    ->get();
 
-        return Inertia::render('Users/Index', [
-            'users' => $data
+        return Inertia::render('User/Index', [
+            'users' => $data,
         ]);
     }
 
+    // public function create()
+    // {   // one column from the roles table
+    //     $roles = Role::pluck('name','name')->all();
+    //     return Inertia::render('User/Create', [
+    //         'roles' => $roles
+    //     ]);
+    // }
+
     public function create()
-    {   // one column from the roles table
-        $roles = Role::pluck('name','name')->all();
-        return view('admin.users.create',compact('roles'));
+    {
+        // Convert the roles to an array of objects
+        $roles = Role::pluck('name')->map(function ($role) {
+            return ['value' => $role, 'label' => ucfirst($role)];
+        })->values()->toArray();
+
+        return Inertia::render('User/Create', [
+            'roles' => $roles,
+        ]);
     }
+
 
     public function store(Request $request): RedirectResponse
     {
@@ -47,8 +65,7 @@ class UserController extends Controller
 
         $user->assignRole($request->roles);
 
-        return redirect()->route('users.index')
-            ->with('success','User created successfully');
+        return redirect()->with('success','User created successfully');
 
     }
 
@@ -59,7 +76,11 @@ class UserController extends Controller
         $roles = Role::pluck('name', 'name')->all();  // Get all roles
         $userRoles = $user->roles->pluck('name')->toArray();  // Get current user's roles
 
-        return view('admin.users.edit', compact('user', 'roles', 'userRoles'));
+        return Inertia::render('User/Edit', [
+            'user' => $user,
+            'roles' => $roles,
+            'userRoles' => $userRoles
+        ]);
     }
 
     // Update the specified user in the database
