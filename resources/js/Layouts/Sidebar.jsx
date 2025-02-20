@@ -12,6 +12,12 @@ import BackupDownload from "@/Pages/DatabaseBackup/BackupDownload";
 export default function Sidebar() {
     const [activeDropdown, setActiveDropdown] = useState(null);
     const { url } = usePage();
+    const { auth } = usePage().props;
+
+      // Permission check function
+      const can = (permission) => {
+        return auth?.user?.permissions?.includes(permission);
+    };
 
     useEffect(() => {
 
@@ -100,6 +106,8 @@ export default function Sidebar() {
                 </div>
 
          {/* Customers Dropdown */}
+
+         {/* {can('customer-create') && ( */}
 <div className="px-4 py-2">
     <button
         onClick={() => toggleDropdown(3)}
@@ -140,6 +148,7 @@ export default function Sidebar() {
         </div>
     )}
 </div>
+{/* )} */}
 
 {/* Brands Dropdown */}
 <div className="px-4 py-2">
